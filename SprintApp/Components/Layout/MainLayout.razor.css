@@ -6,10 +6,10 @@
     right: 1rem;
     z-index: 1000;
     padding: 1rem;
-    border: 1px solid #d5edab;
+    border: 1px solid var(--accent);
     border-radius: 0.75rem;
-    background: #101a26;
-    color: #f1eee6;
+    background: #100D1B;
+    color: var(--ink);
 }
 
-#blazor-error-ui a { color: #d5edab; text-decoration: underline; }
+#blazor-error-ui a { color: var(--accent); text-decoration: underline; }

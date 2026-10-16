@@ -1,6 +1,6 @@
 @inject SavedTripsService SavedTrips
 
-<article class="tour-card" data-experience-id="@Experience.Id">
+<article class="tour-card @(IsFeatureRow ? "tour-row" : "")" data-experience-id="@Experience.Id">
     <div class="tour-image"><img src="@Experience.ImageUrl" alt="An illustrated night sky in @Experience.Destination.Region" loading="lazy" /><span class="tour-category"><Icon Name="@CategoryIcon" Size="14" /> @CategoryLabel</span><button type="button" class="tour-save @(IsSaved ? "is-saved" : "")" aria-label="@(IsSaved ? $"Unsave {Experience.Name}" : $"Save {Experience.Name}")" aria-pressed="@IsSaved.ToString().ToLowerInvariant()" @onclick="ToggleSaved"><Icon Name="heart" Size="17" /></button><span class="tour-image-note"><Icon Name="sparkles" Size="12" /> BORTLE @Experience.Sky.BortleClass SKIES</span></div>
     <div class="tour-content"><div class="tour-location"><span><Icon Name="pin" Size="13" /> @Experience.Destination.DisplayName</span><span><Icon Name="star" Size="12" /> @Experience.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</span></div><h3><button type="button" @onclick="() => OnDetails.InvokeAsync(Experience)">@Experience.Name</button></h3><p class="tour-description">@Experience.Description</p><div class="tour-facts"><span><Icon Name="clock" Size="14" /> @Experience.DurationHours.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) hours</span><span><Icon Name="people" Size="15" /> Up to @Experience.MaxParticipants</span><span><Icon Name="moon" Size="14" /> @Experience.Sky.MoonIlluminationPercent% moon</span></div><div class="tour-footer"><div><strong>$@Experience.PricePerPerson.ToString("0")</strong><span> / person</span></div><button type="button" class="tour-details-button" @onclick="() => OnDetails.InvokeAsync(Experience)" aria-label="Explore @Experience.Name">Explore this night <Icon Name="arrow-up-right" Size="16" /></button></div></div>
 </article>
@@ -9,6 +9,7 @@
     [Parameter, EditorRequired] public TourExperience Experience { get; set; } = default!;
     [Parameter] public EventCallback<TourExperience> OnDetails { get; set; }
     [Parameter] public EventCallback<string> OnSaved { get; set; }
+    [Parameter] public bool IsFeatureRow { get; set; }
     private bool IsSaved => SavedTrips.Contains(Experience.Id, SavedItemType.Experience);
     private string CategoryIcon => Experience.Type switch { ExperienceType.Stargazing => "telescope", ExperienceType.Astrophotography => "camera", _ => "compass" };
     private string CategoryLabel => Experience.Type switch { ExperienceType.Stargazing => "Stargazing", ExperienceType.Astrophotography => "Astrophotography", _ => "Night walk" };

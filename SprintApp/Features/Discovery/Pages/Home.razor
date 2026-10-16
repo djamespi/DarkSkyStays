@@ -13,13 +13,13 @@
             <span class="eyebrow hero-eyebrow"><span class="status-dot"></span> CHECK OUT. LOOK UP.</span>
             <h1 id="hero-title">Stay somewhere<br />the stars <em>still shine.</em></h1>
             <p>Extraordinary stays. Unforgettable night skies.<br class="desktop-break" /> Find a little space between you and the everyday.</p>
-            <a class="button button-lime" href="/stays">Explore the stays <Icon Name="arrow-up-right" Size="19" /></a>
+            <a class="button button-primary" href="/stays">Explore the stays <Icon Name="arrow-up-right" Size="19" /></a>
             <span class="hero-footnote"><Icon Name="compass" Size="15" /> A world of wonder, away from the glow.</span>
         </div>
         <div class="hero-coordinate"><span>44°00′ S &nbsp; 170°28′ E</span><span>Aoraki / Mackenzie, New Zealand</span></div>
         <div class="sky-postcard">
             <div class="postcard-header"><span class="status-dot"></span> A NIGHT TO IMAGINE <span class="sample-tag">SAMPLE</span></div>
-            <div class="postcard-moon"><span class="moon-disc" aria-hidden="true"></span><div><strong>A little less moon.<br />A lot more wonder.</strong><span>Waxing crescent · 6% illuminated</span></div></div>
+            <div class="postcard-moon"><MoonPhaseIcon Phase="MoonPhase.WaxingCrescent" IlluminationPercent="6" Size="52" /><div><strong>A little less moon.<br />A lot more wonder.</strong><span>Waxing crescent · 6% illuminated</span></div></div>
             <div class="postcard-bottom"><span><Icon Name="sparkles" Size="15" /> Bortle 1 skies</span><span>10 PM – 2 AM <Icon Name="arrow-up-right" Size="13" /></span></div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                 <select id="sky-preference" @bind="maxBortle"><option value="9">All beautiful night skies</option><option value="1">Pristine skies · Bortle 1</option><option value="2">Extra dark skies · Bortle 1–2</option></select>
             </div>
         </div>
-        <button type="submit" class="button button-lime">Find my night <Icon Name="search" Size="17" /></button>
+        <button type="submit" class="button button-primary">Find my night <Icon Name="search" Size="17" /></button>
     </form>
     <div class="trust-line"><span><Icon Name="check" Size="14" /> Thoughtfully picked stays</span><span><Icon Name="moon" Size="14" /> Know your night sky</span><span><Icon Name="leaf" Size="14" /> Leave a lighter footprint</span></div>
 </div>
@@ -73,7 +73,7 @@
             else
             {
                 <p>A new moon means less moonlight, helping faint stars stand out. A bright moon can be beautiful too—choose the kind of night you want.</p>
-                <div class="moon-phases" aria-label="Moon phases from new moon to full moon"><span>●<small>New moon</small></span><span>◔<small>Crescent</small></span><span>◐<small>Quarter</small></span><span>○<small>Full moon</small></span></div>
+                <div class="moon-phases" aria-label="Moon phases from new moon to full moon"><span><MoonPhaseIcon Phase="MoonPhase.NewMoon" IlluminationPercent="0" Size="32" /><small>New moon</small></span><span><MoonPhaseIcon Phase="MoonPhase.WaxingCrescent" IlluminationPercent="20" Size="32" /><small>Crescent</small></span><span><MoonPhaseIcon Phase="MoonPhase.FirstQuarter" IlluminationPercent="50" Size="32" /><small>Quarter</small></span><span><MoonPhaseIcon Phase="MoonPhase.FullMoon" IlluminationPercent="100" Size="32" /><small>Full moon</small></span></div>
             }
         </div>
         <span class="guide-note">Sky values in this prototype are illustrative, not live forecasts.</span>

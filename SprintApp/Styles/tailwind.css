@@ -3,10 +3,11 @@
 @source "../Features";
 
 @theme {
-    --color-midnight: #080e18;
-    --color-panel: #101a26;
-    --color-starlight: #d5edab;
-    --color-ivory: #f1eee6;
-    --font-sans: "Segoe UI", Arial, sans-serif;
-    --font-display: Georgia, "Times New Roman", serif;
+    --color-midnight: #05040B;
+    --color-panel: #100D1B;
+    --color-starlight: #C4B5FD;
+    --color-ivory: #E9E6F5;
+    --color-violet-glow: #7C3AED;
+    --font-sans: "Space Grotesk", "Segoe UI", sans-serif;
+    --font-display: "Fraunces", Georgia, serif;
 }

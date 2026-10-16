@@ -1,0 +1,7 @@
+.bortle-reading { margin-top: 24px; }
+.bortle-blocks { display: grid; grid-template-columns: repeat(9, 1fr); gap: 5px; }
+.bortle-block { height: 7px; border-radius: 2px; background: var(--bortle-color); opacity: .65; border: 1px solid #ffffff10; }
+.bortle-block.current { outline: 1px solid var(--accent); outline-offset: 3px; opacity: 1; }
+.bortle-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 9px; color: #E9E6F580; letter-spacing: .12em; }
+.bortle-caption > span:last-child { color: var(--accent); letter-spacing: 0; font-size: 11px; }
+.bortle-caption > span:last-child > span { color: #E9E6F566; }

@@ -10,7 +10,8 @@
     <div class="stay-info">
         <div class="stay-location"><span><Icon Name="pin" Size="13" /> @Stay.Destination.DisplayName</span><span class="rating"><Icon Name="star" Size="12" /> @Stay.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</span></div>
         <h3><button type="button" class="stay-title-button" @onclick="() => OnDetails.InvokeAsync(Stay)">@Stay.Name</button></h3>
-        <p class="stay-sky"><Icon Name="moon" Size="14" /> @Stay.Sky.MoonPhaseLabel <span>·</span> @Stay.Sky.MoonIlluminationPercent% illuminated</p>
+        <p class="stay-sky"><MoonPhaseIcon Phase="Stay.Sky.MoonPhase" IlluminationPercent="Stay.Sky.MoonIlluminationPercent" Size="20" /> @Stay.Sky.MoonPhaseLabel <span>·</span> @Stay.Sky.MoonIlluminationPercent% illuminated</p>
+        <BortleBar CurrentClass="Stay.Sky.BortleClass" />
         <div class="stay-bottom"><span><strong>$@Stay.PricePerNight.ToString("0")</strong> / night</span><button type="button" class="round-button" aria-label="View details for @Stay.Name" @onclick="() => OnDetails.InvokeAsync(Stay)"><Icon Name="arrow-up-right" Size="19" /></button></div>
     </div>
 </article>

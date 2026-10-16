@@ -19,7 +19,7 @@
                 <div class="detail-amenities"><h3>Little comforts. Big skies.</h3><ul>@foreach (var amenity in Stay.Amenities) { <li><Icon Name="check" Size="15" /> @amenity</li> }</ul></div>
                 <div class="detail-sky"><span class="eyebrow"><Icon Name="moon" Size="14" /> YOUR SAMPLE NIGHT</span><dl><div><dt>Light pollution</dt><dd>Bortle @Stay.Sky.BortleClass / 9</dd></div><div><dt>Moon phase</dt><dd>@Stay.Sky.MoonPhaseLabel</dd></div><div><dt>Moon illumination</dt><dd>@Stay.Sky.MoonIlluminationPercent%</dd></div><div><dt>Cloud cover</dt><dd>@Stay.Sky.CloudCoverPercent%</dd></div><div><dt>Viewing window</dt><dd>@Stay.Sky.ViewingWindow</dd></div></dl><p>Illustrative conditions, not a live forecast.</p></div>
             </div>
-            <div class="detail-save-row"><div><strong>$@Stay.PricePerNight.ToString("0")</strong><span> USD / night</span><small>Sample rate · no payment required</small></div><button type="button" class="button @(IsSaved ? "button-outline" : "button-lime")" aria-pressed="@IsSaved.ToString().ToLowerInvariant()" @onclick="ToggleSaved"><Icon Name="heart" Size="17" /> @(IsSaved ? "Remove from saved" : "Save this stay")</button></div>
+            <div class="detail-save-row"><div><strong>$@Stay.PricePerNight.ToString("0")</strong><span> USD / night</span><small>Sample rate · no payment required</small></div><button type="button" class="button @(IsSaved ? "button-outline" : "button-primary")" aria-pressed="@IsSaved.ToString().ToLowerInvariant()" @onclick="ToggleSaved"><Icon Name="heart" Size="17" /> @(IsSaved ? "Remove from saved" : "Save this stay")</button></div>
             <p class="detail-session-note">Keep your favorites together while you explore. Saved stays reset when you refresh.</p>
         </div>
     }

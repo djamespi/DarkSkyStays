@@ -1,92 +1,92 @@
-.experience-dialog { width: min(820px, calc(100% - 48px)); max-height: 91dvh; padding: 0; margin: auto; overflow-y: auto; border: 1px solid #526848; border-radius: 12px; background: #0e1b23; color: #f1eee6; box-shadow: 0 25px 100px #0009; }
-.experience-dialog::backdrop { background: #030b14dd; backdrop-filter: blur(8px); }
-.experience-close { position: absolute; top: 15px; right: 15px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid #b1ca9e66; border-radius: 50%; background: #0d1b27c9; color: #e6eedb; backdrop-filter: blur(8px); }
-.experience-close:hover { background: #33492e; }
-.experience-dialog-image { height: 240px; position: relative; background: #142b35; }
+.experience-dialog { width: min(820px, calc(100% - 48px)); max-height: 91dvh; padding: 0; margin: auto; overflow-y: auto; border: 1px solid #C4B5FD33; border-radius: 24px; background: var(--panel); color: var(--ink); box-shadow: 0 25px 100px #0009, 0 0 80px #2E106540; }
+.experience-dialog::backdrop { background: #0d0a12dd; backdrop-filter: blur(8px); }
+.experience-close { position: absolute; top: 15px; right: 15px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid #c0bcd266; border-radius: 50%; background: #191323c9; color: #e2ddf5; backdrop-filter: blur(8px); }
+.experience-close:hover { background: #3d3749; }
+.experience-dialog-image { height: 240px; position: relative; background: #221a30; }
 .experience-dialog-image > img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
-.experience-dialog-image > span { position: absolute; left: 28px; bottom: 21px; display: flex; align-items: center; gap: 8px; color: #deebce; padding: 8px 11px; background: #0b1e28b0; border: 1px solid #b1cb9c44; border-radius: 4px; font-size: 8px; letter-spacing: 1.5px; }
+.experience-dialog-image > span { position: absolute; left: 28px; bottom: 21px; display: flex; align-items: center; gap: 8px; color: #dfdbf4; padding: 8px 11px; background: #1a1424b0; border: 1px solid #c1bdd344; border-radius: 12px; font-size: 10px; letter-spacing: 1.5px; }
 .experience-dialog-content { padding: 30px 32px; }
-.experience-dialog-content > .eyebrow { font-size: 9px; letter-spacing: 1px; }
+.experience-dialog-content > .eyebrow { font-size: 11px; letter-spacing: 1px; }
 .experience-dialog-content h2 { font-size: 36px; line-height: 1.1; margin-top: 13px; max-width: 650px; }
 .experience-dialog-content h2:focus { outline: none; }
-.experience-detail-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 21px; color: #aac0ab; font-size: 10px; margin-top: 19px; }
+.experience-detail-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 21px; color: #b6b3c8; font-size: 12px; margin-top: 19px; }
 .experience-detail-facts > span { display: flex; align-items: center; gap: 6px; }
-.experience-detail-description { font-size: 13px; line-height: 1.9; color: #acbfb7; margin-top: 23px; }
-.experience-detail-columns { display: grid; grid-template-columns: 1fr 1.05fr; gap: 26px; padding-block: 26px; margin-top: 25px; border-top: 1px solid #354638; border-bottom: 1px solid #354638; }
-.experience-detail-columns h3 { font: 23px/1.2 Georgia, serif; color: #e3ebd8; }
-.experience-inclusions { list-style: none; padding: 0; margin: 21px 0 0; display: grid; gap: 13px; font-size: 11px; color: #bad0b3; }
+.experience-detail-description { font-size: 15px; line-height: 1.9; color: #b5b2c7; margin-top: 23px; }
+.experience-detail-columns { display: grid; grid-template-columns: 1fr 1.05fr; gap: 26px; padding-block: 26px; margin-top: 25px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.experience-detail-columns h3 { font: 300 23px/1.2 var(--font-heading); color: #dfdbf4; }
+.experience-inclusions { list-style: none; padding: 0; margin: 21px 0 0; display: grid; gap: 13px; font-size: 13px; color: #c6c1d8; }
 .experience-inclusions li { display: flex; align-items: center; gap: 10px; }
-.experience-inclusions ::deep svg { color: #d5edab; }
+.experience-inclusions ::deep svg { color: var(--accent); }
 .guide-introduction { display: flex; align-items: center; gap: 11px; margin-top: 27px; }
-.guide-avatar { width: 36px; height: 36px; border: 1px solid #789161; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d5edab; background: #2a3e2d; font: italic 21px Georgia, serif; }
-.guide-introduction > span:last-child { font-size: 11px; color: #d2dfc5; }
-.guide-introduction small { display: block; font-size: 8px; color: #8fa787; margin-top: 4px; }
-.experience-sky { border: 1px solid #425a3e; padding: 19px; border-radius: 7px; background: #1b302440; }
-.experience-sky > .eyebrow { font-size: 8px; letter-spacing: 1px; }
-.experience-sky dl { display: grid; gap: 13px; font-size: 10px; margin: 20px 0 0; }
+.guide-avatar { width: 36px; height: 36px; border: 1px solid #8a8797; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent); background: #281e38; font: italic 21px var(--font-heading); }
+.guide-introduction > span:last-child { font-size: 13px; color: #d4cfe8; }
+.guide-introduction small { display: block; font-size: 10px; color: #9f9bae; margin-top: 4px; }
+.experience-sky { border: 1px solid var(--line); padding: 19px; border-radius: 12px; background: #1f182b40; }
+.experience-sky > .eyebrow { font-size: 10px; letter-spacing: 1px; }
+.experience-sky dl { display: grid; gap: 13px; font-size: 12px; margin: 20px 0 0; }
 .experience-sky dl > div { display: flex; justify-content: space-between; gap: 13px; }
-.experience-sky dt { color: #94ac92; }
-.experience-sky dd { margin: 0; text-align: right; color: #dae6cd; }
-.experience-sky p { margin-top: 19px; font-size: 8px; color: #90a786; line-height: 1.8; }
+.experience-sky dt { color: #a3a0b3; }
+.experience-sky dd { margin: 0; text-align: right; color: #dbd6ef; }
+.experience-sky p { margin-top: 19px; font-size: 10px; color: #9f9bae; line-height: 1.8; }
 .experience-dialog-actions { display: flex; align-items: center; gap: 12px; padding-top: 25px; }
 .experience-detail-price { flex: 1; }
 .experience-detail-price > strong { font-size: 27px; font-weight: 500; }
-.experience-detail-price > span { font-size: 11px; color: #afc3a3; }
-.experience-detail-price > small { display: block; color: #91a988; font-size: 9px; margin-top: 6px; }
-.experience-save-detail { display: flex; align-items: center; justify-content: center; width: 47px; height: 47px; border: 1px solid #7b9461; background: transparent; color: #d5edab; border-radius: 5px; }
-.experience-save-detail.selected { background: #d5edab; color: #1d2a19; }
+.experience-detail-price > span { font-size: 13px; color: #b9b5cb; }
+.experience-detail-price > small { display: block; color: #a19db0; font-size: 11px; margin-top: 6px; }
+.experience-save-detail { display: flex; align-items: center; justify-content: center; width: 47px; height: 47px; border: 1px solid #8d8a9a; background: transparent; color: var(--accent); border-radius: 12px; }
+.experience-save-detail.selected { background: var(--accent); color: #1b1526; }
 .experience-save-detail.selected ::deep svg { fill: currentColor; }
 .plan-night { gap: 15px; }
 .booking-content { padding-top: 31px; }
-.booking-back { display: flex; align-items: center; gap: 8px; width: fit-content; border: 0; background: transparent; color: #b6ccaa; padding: 5px 0; margin-bottom: 31px; font-size: 10px; }
-.booking-content > .eyebrow { font-size: 8px; letter-spacing: 1.6px; }
+.booking-back { display: flex; align-items: center; gap: 8px; width: fit-content; border: 0; background: transparent; color: #c2bed4; padding: 5px 0; margin-bottom: 31px; font-size: 12px; }
+.booking-content > .eyebrow { font-size: 10px; letter-spacing: 1.6px; }
 .booking-content > h2 { font-size: 38px; margin-top: 14px; }
-.booking-tour-summary { display: flex; align-items: center; gap: 17px; border: 1px solid #354d39; padding: 12px; border-radius: 7px; background: #16272b; margin-top: 23px; }
-.booking-tour-summary img { width: 100px; height: 80px; border-radius: 4px; object-fit: cover; }
-.booking-tour-summary strong { display: block; font: 21px/1.2 Georgia, serif; color: #e6edd9; }
-.booking-tour-summary span { display: block; font-size: 10px; color: #b1c9a5; margin-top: 8px; }
-.booking-tour-summary small { display: block; font-size: 9px; color: #8ca486; margin-top: 6px; }
-.demo-booking-note { display: flex; align-items: flex-start; gap: 12px; border: 1px solid #4f633b; background: #d5edab08; border-radius: 6px; padding: 15px 17px; margin-block: 20px; color: #b9cf9e; }
-.demo-booking-note > ::deep svg { margin-top: 2px; color: #d5edab; }
-.demo-booking-note p { font-size: 10px; line-height: 1.9; }
-.demo-booking-note strong { font-weight: 600; color: #d5e8bf; }
+.booking-tour-summary { display: flex; align-items: center; gap: 17px; border: 1px solid var(--line); padding: 12px; border-radius: 12px; background: #1c1527; margin-top: 23px; }
+.booking-tour-summary img { width: 100px; height: 80px; border-radius: 12px; object-fit: cover; }
+.booking-tour-summary strong { display: block; font: 300 21px/1.2 var(--font-heading); color: #e1dcf5; }
+.booking-tour-summary span { display: block; font-size: 12px; color: #bfbbd1; margin-top: 8px; }
+.booking-tour-summary small { display: block; font-size: 11px; color: #9c99ab; margin-top: 6px; }
+.demo-booking-note { display: flex; align-items: flex-start; gap: 12px; border: 1px solid var(--line); background: #C4B5FD08; border-radius: 12px; padding: 15px 17px; margin-block: 20px; color: #c5c1d7; }
+.demo-booking-note > ::deep svg { margin-top: 2px; color: var(--accent); }
+.demo-booking-note p { font-size: 12px; line-height: 1.9; }
+.demo-booking-note strong { font-weight: 600; color: #dcd8f1; }
 .booking-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 21px; margin-top: 23px; }
 .booking-field { min-width: 0; }
-.booking-field label { display: block; font-size: 11px; color: #cbdcbd; margin-bottom: 9px; }
-.booking-field ::deep input, .booking-field ::deep select { display: block; width: 100%; min-height: 44px; border: 1px solid #486141; border-radius: 5px; padding: 11px 12px; background: #15252b; color: #e4edd7; font: 12px 'Segoe UI', sans-serif; }
-.booking-field ::deep input::placeholder { color: #829a7f; }
-.booking-field ::deep input:focus-visible, .booking-field ::deep select:focus-visible { outline: 1px solid #d5edab; outline-offset: 3px; }
+.booking-field label { display: block; font-size: 13px; color: #d1cde5; margin-bottom: 9px; }
+.booking-field ::deep input, .booking-field ::deep select { display: block; width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; background: #1c1527; color: #e1dcf5; font: 12px var(--font-ui); }
+.booking-field ::deep input::placeholder { color: #928fa0; }
+.booking-field ::deep input:focus-visible, .booking-field ::deep select:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
 .booking-field ::deep input.invalid, .booking-field ::deep select.invalid { border-color: #f0a598; outline: none; }
-.booking-field ::deep .validation-message { font-size: 10px; line-height: 1.7; margin-top: 8px; color: #f0b9a7; }
-.booking-errors { border: 1px solid #96634e; background: #b3673812; padding: 15px 17px; border-radius: 6px; margin-top: 20px; color: #efc4ad; font-size: 11px; }
+.booking-field ::deep .validation-message { font-size: 12px; line-height: 1.7; margin-top: 8px; color: #f0b9a7; }
+.booking-errors { border: 1px solid #96634e; background: #b3673812; padding: 15px 17px; border-radius: 12px; margin-top: 20px; color: #efc4ad; font-size: 13px; }
 .booking-errors:focus { outline: 1px solid #f0b9a7; outline-offset: 3px; }
 .booking-errors strong { font-weight: 500; }
-.booking-errors ::deep ul { padding-left: 17px; margin: 10px 0 0; font-size: 10px; line-height: 1.8; }
-.booking-total { border: 1px solid #3c573b; border-radius: 7px; padding: 20px; margin-top: 26px; background: #19302733; }
-.booking-total > div { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 12px; color: #b5c9ac; }
-.booking-total > div + div { margin-top: 17px; padding-top: 16px; border-top: 1px solid #3e573a; font-size: 15px; color: #e3ecd4; }
+.booking-errors ::deep ul { padding-left: 17px; margin: 10px 0 0; font-size: 12px; line-height: 1.8; }
+.booking-total { border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin-top: 26px; background: #1f182b33; }
+.booking-total > div { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-size: 14px; color: #bfbbd1; }
+.booking-total > div + div { margin-top: 17px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; color: #e0dbf5; }
 .booking-total strong { font-weight: 500; }
 .booking-total #booking-total { font-size: 23px; }
-.booking-total small { font-size: 10px; color: #b5caa5; }
-.booking-total > p { margin-top: 13px; font-size: 9px; color: #94ac8c; line-height: 1.8; }
+.booking-total small { font-size: 12px; color: #c0bcd2; }
+.booking-total > p { margin-top: 13px; font-size: 11px; color: #a3a0b3; line-height: 1.8; }
 .booking-submit { width: 100%; margin-top: 21px; }
 .confirmation-content { padding-top: 46px; }
-.confirmation-mark { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin: 0 auto 24px; border: 1px solid #adc68a; border-radius: 50%; background: #d5edab16; color: #d5edab; box-shadow: 0 0 45px #d5edab0c; }
-.confirmation-content > .eyebrow { display: flex; justify-content: center; text-align: center; font-size: 8px; letter-spacing: 1.7px; }
+.confirmation-mark { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin: 0 auto 24px; border: 1px solid #bcb8ce; border-radius: 50%; background: #C4B5FD16; color: var(--accent); box-shadow: 0 0 45px #C4B5FD0c; }
+.confirmation-content > .eyebrow { display: flex; justify-content: center; text-align: center; font-size: 10px; letter-spacing: 1.7px; }
 .confirmation-content > h2 { max-width: none; text-align: center; font-size: 43px; margin-top: 18px; line-height: 1.15; }
-.confirmation-content > p { text-align: center; margin-top: 19px; color: #a5bf9c; font-size: 12px; line-height: 1.8; overflow-wrap: anywhere; }
-.confirmation-reference { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 17px; border: 1px solid #536d43; border-radius: 6px; background: #d5edab08; margin-top: 28px; }
-.confirmation-reference > span { font-size: 8px; letter-spacing: 1px; color: #a5c28e; }
-.confirmation-reference strong { font: 500 13px 'Segoe UI', sans-serif; letter-spacing: 1.5px; color: #d5edab; }
-.confirmation-content h3 { font: 27px/1.2 Georgia, serif; margin-top: 25px; text-align: center; }
-.confirmation-content > .confirmation-place { font-size: 10px; margin-top: 12px; }
-.confirmation-facts { padding-block: 21px; margin: 23px 0 0; border-block: 1px solid #3f583b; display: grid; gap: 15px; font-size: 11px; }
+.confirmation-content > p { text-align: center; margin-top: 19px; color: #b5b2c7; font-size: 14px; line-height: 1.8; overflow-wrap: anywhere; }
+.confirmation-reference { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 14px 17px; border: 1px solid var(--line); border-radius: 12px; background: #C4B5FD08; margin-top: 28px; }
+.confirmation-reference > span { font-size: 10px; letter-spacing: 1px; color: #b8b4ca; }
+.confirmation-reference strong { font: 500 13px var(--font-ui); letter-spacing: 1.5px; color: var(--accent); }
+.confirmation-content h3 { font: 300 27px/1.2 var(--font-heading); margin-top: 25px; text-align: center; }
+.confirmation-content > .confirmation-place { font-size: 12px; margin-top: 12px; }
+.confirmation-facts { padding-block: 21px; margin: 23px 0 0; border-block: 1px solid var(--line); display: grid; gap: 15px; font-size: 13px; }
 .confirmation-facts > div { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-.confirmation-facts dt { color: #95b18c; flex-shrink: 0; }
-.confirmation-facts dd { margin: 0; color: #dfead2; text-align: right; overflow-wrap: anywhere; min-width: 0; }
+.confirmation-facts dt { color: #a8a5b8; flex-shrink: 0; }
+.confirmation-facts dd { margin: 0; color: #dedaf3; text-align: right; overflow-wrap: anywhere; min-width: 0; }
 .confirmation-actions { display: flex; align-items: stretch; gap: 14px; }
-.confirmation-actions > button { flex: 1; gap: 10px; padding-inline: 15px; font-size: 11px; }
+.confirmation-actions > button { flex: 1; gap: 10px; padding-inline: 15px; font-size: 13px; }
 .confirmation-actions > button[aria-pressed="true"] ::deep svg { fill: currentColor; }
 @media (max-width: 600px) {
-    .experience-dialog { width: calc(100% - 24px); max-height: 94dvh; border-radius: 9px; }.experience-dialog-image { height: 190px; }.experience-dialog-image > span { left: 18px; bottom: 17px; font-size: 7px; letter-spacing: 1px; }.experience-dialog-content { padding: 25px 21px; }.experience-dialog-content > .eyebrow { font-size: 8px; }.experience-dialog-content h2 { font-size: 30px; }.experience-detail-facts { font-size: 9px; gap: 11px 17px; margin-top: 18px; }.experience-detail-description { font-size: 12px; margin-top: 21px; }.experience-detail-columns { grid-template-columns: 1fr; gap: 26px; padding-block: 23px; }.experience-detail-columns h3 { font-size: 24px; }.experience-inclusions { font-size: 11px; }.guide-introduction { margin-top: 23px; }.experience-sky dl { font-size: 11px; }.experience-dialog-actions { display: grid; grid-template-columns: 1fr auto; gap: 20px 14px; }.experience-detail-price > strong { font-size: 27px; }.experience-detail-price > span { font-size: 10px; }.plan-night { grid-column: 1 / -1; }.booking-content { padding-top: 31px; }.booking-back { font-size: 9px; margin-bottom: 29px; padding-right: 30px; }.booking-content > .eyebrow { font-size: 6px; letter-spacing: 1.2px; }.booking-content > h2 { font-size: 33px; margin-top: 13px; }.booking-tour-summary { gap: 12px; padding: 10px; margin-top: 21px; }.booking-tour-summary img { width: 70px; height: 90px; }.booking-tour-summary strong { font-size: 19px; }.booking-tour-summary span { font-size: 8px; line-height: 1.7; }.booking-tour-summary small { font-size: 8px; line-height: 1.6; }.demo-booking-note { padding: 14px; gap: 10px; }.demo-booking-note p { font-size: 10px; line-height: 1.8; }.booking-fields { grid-template-columns: 1fr; gap: 20px; }.booking-field label { font-size: 11px; }.booking-field ::deep input, .booking-field ::deep select { font-size: 12px; min-height: 46px; }.booking-total { padding: 17px; }.booking-total > div { font-size: 11px; }.booking-total > div + div { font-size: 13px; }.booking-total #booking-total { font-size: 22px; }.booking-total > p { font-size: 8px; }.booking-submit { padding-inline: 14px; gap: 15px; font-size: 11px; }.confirmation-content { padding-top: 48px; }.confirmation-content > .eyebrow { font-size: 6px; letter-spacing: 1.2px; }.confirmation-content > h2 { font-size: 36px; }.confirmation-content > p { font-size: 11px; }.confirmation-reference { padding: 13px; gap: 10px; }.confirmation-reference > span { font-size: 7px; }.confirmation-reference strong { font-size: 10px; letter-spacing: 1px; }.confirmation-content h3 { font-size: 24px; }.confirmation-facts { font-size: 10px; gap: 17px; }.confirmation-actions { flex-direction: column; gap: 12px; }.confirmation-actions > button { font-size: 11px; }.confirmation-mark { width: 59px; height: 59px; }
+    .experience-dialog { width: calc(100% - 24px); max-height: 94dvh; border-radius: 24px; }.experience-dialog-image { height: 190px; }.experience-dialog-image > span { left: 18px; bottom: 17px; font-size: 10px; letter-spacing: 1px; }.experience-dialog-content { padding: 25px 21px; }.experience-dialog-content > .eyebrow { font-size: 10px; }.experience-dialog-content h2 { font-size: 30px; }.experience-detail-facts { font-size: 11px; gap: 11px 17px; margin-top: 18px; }.experience-detail-description { font-size: 14px; margin-top: 21px; }.experience-detail-columns { grid-template-columns: 1fr; gap: 26px; padding-block: 23px; }.experience-detail-columns h3 { font-size: 24px; }.experience-inclusions { font-size: 13px; }.guide-introduction { margin-top: 23px; }.experience-sky dl { font-size: 13px; }.experience-dialog-actions { display: grid; grid-template-columns: 1fr auto; gap: 20px 14px; }.experience-detail-price > strong { font-size: 27px; }.experience-detail-price > span { font-size: 12px; }.plan-night { grid-column: 1 / -1; }.booking-content { padding-top: 31px; }.booking-back { font-size: 11px; margin-bottom: 29px; padding-right: 30px; }.booking-content > .eyebrow { font-size: 10px; letter-spacing: 1.2px; }.booking-content > h2 { font-size: 33px; margin-top: 13px; }.booking-tour-summary { gap: 12px; padding: 10px; margin-top: 21px; }.booking-tour-summary img { width: 70px; height: 90px; }.booking-tour-summary strong { font-size: 19px; }.booking-tour-summary span { font-size: 10px; line-height: 1.7; }.booking-tour-summary small { font-size: 10px; line-height: 1.6; }.demo-booking-note { padding: 14px; gap: 10px; }.demo-booking-note p { font-size: 12px; line-height: 1.8; }.booking-fields { grid-template-columns: 1fr; gap: 20px; }.booking-field label { font-size: 13px; }.booking-field ::deep input, .booking-field ::deep select { font-size: 14px; min-height: 46px; }.booking-total { padding: 17px; }.booking-total > div { font-size: 13px; }.booking-total > div + div { font-size: 15px; }.booking-total #booking-total { font-size: 22px; }.booking-total > p { font-size: 10px; }.booking-submit { padding-inline: 14px; gap: 15px; font-size: 13px; }.confirmation-content { padding-top: 48px; }.confirmation-content > .eyebrow { font-size: 10px; letter-spacing: 1.2px; }.confirmation-content > h2 { font-size: 36px; }.confirmation-content > p { font-size: 13px; }.confirmation-reference { padding: 13px; gap: 10px; }.confirmation-reference > span { font-size: 10px; }.confirmation-reference strong { font-size: 12px; letter-spacing: 1px; }.confirmation-content h3 { font-size: 24px; }.confirmation-facts { font-size: 12px; gap: 17px; }.confirmation-actions { flex-direction: column; gap: 12px; }.confirmation-actions > button { font-size: 13px; }.confirmation-mark { width: 59px; height: 59px; }
 }

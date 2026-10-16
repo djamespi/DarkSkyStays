@@ -1,0 +1,24 @@
+@using SprintApp.Features.Sky.Models
+
+<svg class="sky-moon" xmlns="http://www.w3.org/2000/svg" width="@Size" height="@Size" viewBox="0 0 24 24" role="img" aria-label="@AccessibleLabel">
+    <circle cx="12" cy="12" r="10" fill="#1A1530" stroke="#C4B5FD" stroke-opacity=".2" stroke-width=".4" />
+    @if (Illumination >= 1)
+    {
+        <circle cx="12" cy="12" r="10" fill="#EFE9FF" />
+    }
+    else if (Illumination > 0)
+    {
+        <path d="@IlluminatedPath" fill="#EFE9FF" transform="@(IsWaning ? "translate(24 0) scale(-1 1)" : null)" />
+    }
+</svg>
+
+@code {
+    [Parameter] public MoonPhase Phase { get; set; }
+    [Parameter] public int IlluminationPercent { get; set; }
+    [Parameter] public int Size { get; set; } = 32;
+    [Parameter] public string? Label { get; set; }
+    private double Illumination => Math.Clamp(IlluminationPercent, 0, 100) / 100d;
+    private bool IsWaning => Phase is MoonPhase.WaningCrescent or MoonPhase.LastQuarter or MoonPhase.WaningGibbous;
+    private string AccessibleLabel => Label ?? $"{IlluminationPercent}% illuminated moon";
+    private string IlluminatedPath => FormattableString.Invariant($"M12 2 A10 10 0 0 1 12 22 A{Math.Abs(1 - 2 * Illumination) * 10:0.###} 10 0 0 {(Illumination <= .5 ? 0 : 1)} 12 2 Z");
+}

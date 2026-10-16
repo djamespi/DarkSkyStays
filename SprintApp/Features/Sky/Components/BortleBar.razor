@@ -1,0 +1,14 @@
+<div class="bortle-reading" role="img" aria-label="Bortle class @CurrentClass of 9; lower means darker skies">
+    <div class="bortle-blocks" aria-hidden="true">
+        @for (var number = 1; number <= 9; number++)
+        {
+            <span class="bortle-block @(number == CurrentClass ? "current" : "")" style="--bortle-color: @Colors[number - 1]"></span>
+        }
+    </div>
+    <div class="bortle-caption" aria-hidden="true"><span>SKY DARKNESS</span><span>Class @CurrentClass <span>/ 9</span></span></div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public int CurrentClass { get; set; }
+    private static readonly string[] Colors = ["#0B0820", "#1B1240", "#3B1F6B", "#6B3FA0", "#A56CC1", "#D39BCB", "#F0C7A0", "#F7E19A", "#FFF6D0"];
+}

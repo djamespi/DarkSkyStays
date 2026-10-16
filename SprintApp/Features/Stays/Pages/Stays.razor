@@ -46,7 +46,7 @@
         }
         else
         {
-            <div class="empty-state collection-empty"><Icon Name="@(filters.SavedOnly ? "heart" : "moon")" Size="34" /><h3>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Make room for a little wonder." : "A different sky is waiting.")</h3><p>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Tap the heart on a stay you love. Your favorites stay together while you explore; refreshing starts a new collection." : "No stays match these filters. Try a different destination, a higher budget, or a wider sky preference.")</p><button type="button" class="button button-lime" @onclick="ResetFilters">Explore all stays <Icon Name="arrow-right" Size="17" /></button></div>
+            <div class="empty-state collection-empty"><Icon Name="@(filters.SavedOnly ? "heart" : "moon")" Size="34" /><h3>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Make room for a little wonder." : "A different sky is waiting.")</h3><p>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Tap the heart on a stay you love. Your favorites stay together while you explore; refreshing starts a new collection." : "No stays match these filters. Try a different destination, a higher budget, or a wider sky preference.")</p><button type="button" class="button button-primary" @onclick="ResetFilters">Explore all stays <Icon Name="arrow-right" Size="17" /></button></div>
         }
         <p class="collection-disclaimer">A little imagination goes a long way. Listings, reviews, rates, and sky conditions are sample data.</p>
     </div>

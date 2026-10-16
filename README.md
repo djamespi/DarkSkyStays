@@ -53,6 +53,16 @@ Each feature owns its models, data, pages, and components as needed. Application
 
 The completed sprint includes three required pages (Home, Stays, Experiences) and the optional fourth page (Saved Trips). All four development stages are complete.
 
+The subsequent visual update uses `style: apply violet night sky component design`.
+
+## Component design
+
+The supplied `DESIGN.md` informed the component styling: near-black and violet colors, a drifting star field, translucent navigation and search, Fraunces headings, Space Grotesk UI text, rounded cards, glowing buttons, alternating tour rows, and nine-color Bortle indicators. The existing four pages, international sample catalog, USD prices, filtering, saving, simulated bookings, and collection export remain in place. The layouts remain responsive. Moon icons render each listing's sample illumination; the header explicitly labels its readout as a sample.
+
+Shared theme tokens and font declarations live in `SprintApp/wwwroot/app.css`, with matching Tailwind tokens in `SprintApp/Styles/tailwind.css`. Feature components retain their own scoped styles. `Features/Sky/Components` owns the reusable moon icon and Bortle bar.
+
+Fonts ship locally in `SprintApp/wwwroot/fonts` under the SIL Open Font License; their licenses are included alongside the assets. Their sources are the Google Fonts repositories for [Fraunces](https://github.com/google/fonts/tree/main/ofl/fraunces) and [Space Grotesk](https://github.com/google/fonts/tree/main/ofl/spacegrotesk). No font service is contacted while using the app. To re-download these assets and licenses, run `node tools/download-design-fonts.mjs` from `SprintApp` with internet access. The star-field animation respects reduced-motion settings.
+
 ## Completed features
 
 - `/`: discovery home page with accommodation previews, a search that opens the Stays page, an educational sky guide, and experience previews that open tour details and demo booking.

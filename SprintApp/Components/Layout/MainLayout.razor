@@ -1,16 +1,24 @@
 @inherits LayoutComponentBase
 @using SprintApp.Features.SavedTrips.Components
+@using SprintApp.Features.Sky.Components
+@using SprintApp.Features.Sky.Models
+@using SprintApp.Features.Stays.Data
 
 <a href="#main-content" class="skip-link">Skip to content</a>
-<div class="announcement"><Icon Name="sparkles" Size="13" /> A little further from the ordinary. A little closer to the stars.</div>
 <header class="site-header">
     <div class="page-width header-inner">
         <a class="brand" href="/" aria-label="Dark Sky Stays home">
-            <span class="brand-mark"><Icon Name="moon" Size="27" /><span class="brand-spark">✧</span></span>
-            <span>dark sky<span class="brand-second">S T A Y S</span></span>
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span>Dark Sky <em>Stays</em></span>
         </a>
         <NavMenu />
-        <div class="header-actions"><SavedMenu /><a class="header-cta" href="/stays">Find your night <Icon Name="arrow-up-right" Size="16" /></a></div>
+        <div class="header-actions">
+            <div class="header-moon" aria-label="Sample moon conditions">
+                <MoonPhaseIcon Phase="SampleSky.MoonPhase" IlluminationPercent="SampleSky.MoonIlluminationPercent" Size="32" />
+                <span>@SampleSky.MoonPhaseLabel<small>@SampleSky.MoonIlluminationPercent% illuminated · sample</small></span>
+            </div>
+            <SavedMenu />
+        </div>
     </div>
 </header>
 
@@ -28,3 +36,7 @@
 <div id="blazor-error-ui" role="alert">
     The connection to the stars was interrupted. <a href="" class="reload">Reload the page</a>
 </div>
+
+@code {
+    private static SkyConditions SampleSky => SampleStays.All[0].Sky;
+}
