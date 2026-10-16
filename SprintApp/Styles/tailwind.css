@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@source "../Components";
+@source "../Features";
+
+@theme {
+    --color-midnight: #080e18;
+    --color-panel: #101a26;
+    --color-starlight: #d5edab;
+    --color-ivory: #f1eee6;
+    --font-sans: "Segoe UI", Arial, sans-serif;
+    --font-display: Georgia, "Times New Roman", serif;
+}

@@ -1,0 +1,14 @@
+<button type="button" class="menu-toggle" @onclick="() => menuOpen = !menuOpen" aria-expanded="@menuOpen.ToString().ToLowerInvariant()" aria-controls="primary-nav" aria-label="Toggle navigation">
+    <Icon Name="@(menuOpen ? "close" : "menu")" />
+</button>
+<nav id="primary-nav" class="primary-nav @(menuOpen ? "is-open" : "")" aria-label="Main navigation">
+    <NavLink href="/" Match="NavLinkMatch.All" @onclick="CloseMenu">Discover</NavLink>
+    <a href="/#stays" @onclick="CloseMenu">The stays</a>
+    <a href="/#experiences" @onclick="CloseMenu">After dark</a>
+    <a href="/#sky-guide" @onclick="CloseMenu">Our sky guide <Icon Name="sparkles" Size="13" /></a>
+</nav>
+
+@code {
+    private bool menuOpen;
+    private void CloseMenu() => menuOpen = false;
+}

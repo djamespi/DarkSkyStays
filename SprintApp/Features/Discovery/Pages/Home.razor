@@ -1,0 +1,150 @@
+@page "/"
+
+<PageTitle>Dark Sky Stays — A little closer to the stars</PageTitle>
+
+<section class="hero" aria-labelledby="hero-title">
+    <img class="hero-art" src="images/night-landscape.svg" alt="An illustrated Milky Way above layered alpine mountains, a still lake, and a warmly lit cabin" fetchpriority="high" />
+    <div class="hero-shade"></div>
+    <div class="page-width hero-content">
+        <div class="hero-copy">
+            <span class="eyebrow hero-eyebrow"><span class="status-dot"></span> CHECK OUT. LOOK UP.</span>
+            <h1 id="hero-title">Stay somewhere<br />the stars <em>still shine.</em></h1>
+            <p>Extraordinary stays. Unforgettable night skies.<br class="desktop-break" /> Find a little space between you and the everyday.</p>
+            <a class="button button-lime" href="#stays">Explore the stays <Icon Name="arrow-up-right" Size="19" /></a>
+            <span class="hero-footnote"><Icon Name="compass" Size="15" /> A world of wonder, away from the glow.</span>
+        </div>
+        <div class="hero-coordinate"><span>44°00′ S &nbsp; 170°28′ E</span><span>Aoraki / Mackenzie, New Zealand</span></div>
+        <div class="sky-postcard">
+            <div class="postcard-header"><span class="status-dot"></span> A NIGHT TO IMAGINE <span class="sample-tag">SAMPLE</span></div>
+            <div class="postcard-moon"><span class="moon-disc" aria-hidden="true"></span><div><strong>A little less moon.<br />A lot more wonder.</strong><span>Waxing crescent · 6% illuminated</span></div></div>
+            <div class="postcard-bottom"><span><Icon Name="sparkles" Size="15" /> Bortle 1 skies</span><span>10 PM – 2 AM <Icon Name="arrow-up-right" Size="13" /></span></div>
+        </div>
+    </div>
+    <span class="hero-caption">A quieter kind of five-star experience.</span>
+</section>
+
+<div class="page-width search-wrap">
+    <form class="discovery-search" @onsubmit="FindStays" @onsubmit:preventDefault>
+        <div class="search-field">
+            <Icon Name="pin" Size="20" />
+            <div><label for="destination">YOUR NEXT LITTLE ESCAPE</label>
+                <select id="destination" @bind="destination">
+                    <option value="">Anywhere under the stars</option>
+                    @foreach (var place in SampleDestinations.All) { <option value="@place.Id">@place.DisplayName</option> }
+                </select>
+            </div>
+        </div>
+        <div class="search-field">
+            <Icon Name="moon" Size="20" />
+            <div><label for="sky-preference">HOW DARK DO YOU DREAM?</label>
+                <select id="sky-preference" @bind="maxBortle"><option value="9">All beautiful night skies</option><option value="1">Pristine skies · Bortle 1</option><option value="2">Extra dark skies · Bortle 1–2</option></select>
+            </div>
+        </div>
+        <button type="submit" class="button button-lime">Find my night <Icon Name="search" Size="17" /></button>
+    </form>
+    <div class="trust-line"><span><Icon Name="check" Size="14" /> Thoughtfully picked stays</span><span><Icon Name="moon" Size="14" /> Know your night sky</span><span><Icon Name="leaf" Size="14" /> Leave a lighter footprint</span></div>
+</div>
+
+<section class="page-width stays-section section-space" id="stays" aria-labelledby="stays-title">
+    <div class="section-heading"><div><span class="eyebrow">GOOD NIGHTS START HERE</span><h2 id="stays-title">Off the grid.<br class="mobile-break" /> <em>Into the extraordinary.</em></h2><p>Cozy corners of the world with a front-row seat to the universe.</p></div><button type="button" class="text-link" @onclick="ShowAllStays">@(showAll ? "Show a little less" : "Meet the collection") <Icon Name="arrow-right" Size="17" /></button></div>
+    @if (searched)
+    {
+        <div class="search-feedback" role="status">@FilteredStays.Count() stay@(FilteredStays.Count() == 1 ? "" : "s") found for your kind of night. <button type="button" @onclick="ResetSearch">Reset filters</button></div>
+    }
+    <div class="stay-grid grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        @foreach (var stay in VisibleStays)
+        {
+            <article class="stay-card" @key="stay.Id">
+                <div class="stay-image"><img src="@stay.ImageUrl" alt="@stay.ImageDescription" loading="lazy" /><span class="darkness-badge"><Icon Name="sparkles" Size="12" /> BORTLE @stay.Sky.BortleClass <span>· @stay.Sky.DarknessLabel</span></span><span class="stay-type">@stay.Type</span></div>
+                <div class="stay-info">
+                    <div class="stay-location"><span><Icon Name="pin" Size="13" /> @stay.Destination.DisplayName</span><span class="rating"><Icon Name="star" Size="12" /> @stay.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</span></div>
+                    <h3>@stay.Name</h3>
+                    <p class="stay-sky"><Icon Name="moon" Size="14" /> @stay.Sky.MoonPhaseLabel <span>·</span> @stay.Sky.MoonIlluminationPercent% illuminated</p>
+                    <div class="stay-bottom"><span><strong>$@stay.PricePerNight.ToString("0")</strong> / night</span><button type="button" class="round-button" aria-label="Read about @stay.Name" aria-expanded="@((expandedStay == stay.Id).ToString().ToLowerInvariant())" aria-controls="details-@stay.Id" @onclick="() => ToggleStay(stay.Id)"><Icon Name="@(expandedStay == stay.Id ? "close" : "arrow-up-right")" Size="19" /></button></div>
+                    @if (expandedStay == stay.Id)
+                    {
+                        <div class="stay-expanded" id="details-@stay.Id"><p>@stay.Description</p><ul>@foreach (var amenity in stay.Amenities) { <li><Icon Name="check" Size="12" /> @amenity</li> }</ul><span>Up to @stay.MaxGuests guests · @stay.ReviewCount sample reviews</span></div>
+                    }
+                </div>
+            </article>
+        }
+    </div>
+    @if (!FilteredStays.Any())
+    {
+        <div class="empty-state"><Icon Name="moon" Size="32" /><h3>A different sky is waiting.</h3><p>No sample stays match this combination. Try another destination or a wider sky preference.</p><button type="button" class="button button-lime" @onclick="ResetSearch">Explore all stays</button></div>
+    }
+</section>
+
+<section class="sky-guide page-width" id="sky-guide" aria-labelledby="guide-title">
+    <div class="guide-orbit" aria-hidden="true"><span class="orbit-ring orbit-one"></span><span class="orbit-ring orbit-two"></span><span class="orbit-ring orbit-three"></span><span class="guide-moon"></span><span class="orbit-star star-one">✦</span><span class="orbit-star star-two">✧</span><span class="orbit-label">A LITTLE SKY KNOW-HOW</span></div>
+    <div class="guide-copy">
+        <span class="eyebrow">THE SKY IS PART OF YOUR STAY</span><h2 id="guide-title">Less guesswork.<br /><em>More looking up.</em></h2>
+        <p>A beautiful room is only half the story. Get to know the sky above it before you pack your bags.</p>
+        <div class="guide-tabs" role="tablist" aria-label="Learn about sky conditions"><button type="button" id="darkness-tab" role="tab" aria-selected="@((guideTab == "darkness").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "darkness" ? "selected" : "")" @onclick="ShowDarkness">Light pollution</button><button type="button" id="moon-tab" role="tab" aria-selected="@((guideTab == "moon").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "moon" ? "selected" : "")" @onclick="ShowMoon">Moon phase</button></div>
+        <div class="guide-panel" id="guide-panel" role="tabpanel" aria-labelledby="@(guideTab == "darkness" ? "darkness-tab" : "moon-tab")" tabindex="0">
+            @if (guideTab == "darkness")
+            {
+                <p>The Bortle scale describes sky darkness from 1 to 9. A lower number means less light pollution. Our sample collection highlights classes 1–3.</p>
+                <div class="bortle-scale" aria-label="Bortle scale: 1 is darkest, 9 is brightest">@for (var i = 1; i <= 9; i++) { <span class="bortle-step step-@i">@i</span> }</div><div class="scale-labels"><span>More stars</span><span>More city glow</span></div>
+            }
+            else
+            {
+                <p>A new moon means less moonlight, helping faint stars stand out. A bright moon can be beautiful too—choose the kind of night you want.</p>
+                <div class="moon-phases" aria-label="Moon phases from new moon to full moon"><span>●<small>New moon</small></span><span>◔<small>Crescent</small></span><span>◐<small>Quarter</small></span><span>○<small>Full moon</small></span></div>
+            }
+        </div>
+        <span class="guide-note">Sky values in this prototype are illustrative, not live forecasts.</span>
+    </div>
+</section>
+
+<section class="page-width section-space experiences-section" id="experiences" aria-labelledby="experiences-title">
+    <div class="section-heading"><div><span class="eyebrow">LET THE NIGHT TAKE YOU SOMEWHERE</span><h2 id="experiences-title">Make a little <em>after-dark magic.</em></h2><p>Good company. Local knowledge. A whole new way to see the world.</p></div><span class="editorial-note">Stay curious. Stay out a little longer. <Icon Name="sparkles" Size="17" /></span></div>
+    <div class="experience-preview-grid grid gap-6 md:grid-cols-2">
+        @foreach (var experience in SampleExperiences.All.Take(2))
+        {
+            <article class="experience-preview"><img src="@experience.ImageUrl" alt="@experience.Destination.Region night-sky illustration" loading="lazy" /><div class="experience-overlay"></div><div class="experience-preview-content"><span class="experience-kicker"><Icon Name="compass" Size="14" /> @experience.DurationHours.ToString("0.#") HOURS · SMALL GROUP</span><h3>@experience.Name</h3><div><span>@experience.Destination.Region</span><span>From <strong>$@experience.PricePerPerson.ToString("0")</strong> / person</span></div><button type="button" class="experience-read" @onclick="() => expandedExperience = expandedExperience == experience.Id ? null : experience.Id" aria-expanded="@((expandedExperience == experience.Id).ToString().ToLowerInvariant())" aria-controls="experience-@experience.Id">@(expandedExperience == experience.Id ? "Close story" : "A little more about this night") <Icon Name="arrow-right" Size="16" /></button>@if (expandedExperience == experience.Id) { <p class="experience-description" id="experience-@experience.Id">@experience.Description</p> }</div></article>
+        }
+    </div>
+</section>
+
+<section class="closing-note page-width"><Icon Name="sparkles" Size="30" /><p>Some of the best things in life<br />happen when you <em>look up.</em></p><a href="#stays" class="text-link">Find your somewhere <Icon Name="arrow-up-right" Size="16" /></a></section>
+
+@code {
+    private string destination = "";
+    private int maxBortle = 9;
+    private string appliedDestination = "";
+    private int appliedMaxBortle = 9;
+    private bool searched;
+    private bool showAll;
+    private string? expandedStay;
+    private string? expandedExperience;
+    private string guideTab = "darkness";
+
+    private IEnumerable<Stay> FilteredStays => SampleStays.All.Where(stay =>
+        (string.IsNullOrEmpty(appliedDestination) || stay.Destination.Id == appliedDestination)
+        && stay.Sky.BortleClass <= appliedMaxBortle);
+    private IEnumerable<Stay> VisibleStays => showAll ? FilteredStays : FilteredStays.Take(3);
+
+    private void FindStays()
+    {
+        appliedDestination = destination;
+        appliedMaxBortle = maxBortle;
+        searched = true;
+        showAll = true;
+        expandedStay = null;
+    }
+
+    private void ResetSearch()
+    {
+        destination = appliedDestination = "";
+        maxBortle = appliedMaxBortle = 9;
+        searched = false;
+        showAll = false;
+        expandedStay = null;
+    }
+
+    private void ShowAllStays() => showAll = !showAll;
+    private void ToggleStay(string id) => expandedStay = expandedStay == id ? null : id;
+    private void ShowDarkness() => guideTab = "darkness";
+    private void ShowMoon() => guideTab = "moon";
+}

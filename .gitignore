@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/node_modules/
+.vs/
+.idea/
+*.user
+*.suo
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+artifacts/

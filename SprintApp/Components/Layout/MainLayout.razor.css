@@ -1,0 +1,15 @@
+#blazor-error-ui {
+    display: none;
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    padding: 1rem;
+    border: 1px solid #d5edab;
+    border-radius: 0.75rem;
+    background: #101a26;
+    color: #f1eee6;
+}
+
+#blazor-error-ui a { color: #d5edab; text-decoration: underline; }

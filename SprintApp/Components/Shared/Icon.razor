@@ -1,0 +1,62 @@
+<svg class="@Class" width="@Size" height="@Size" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    @switch (Name)
+    {
+        case "moon":
+            <path d="M20.8 13A8.8 8.8 0 0 1 11 3.2 8.9 8.9 0 1 0 20.8 13Z" />
+            break;
+        case "star":
+            <path d="m12 3 2.8 5.7 6.3.9-4.6 4.5 1.1 6.3L12 17.5l-5.6 2.9 1.1-6.3L3 9.6l6.2-.9Z" />
+            break;
+        case "sparkles":
+            <path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2ZM20 2v4m-2-2h4M3 19v3m-1.5-1.5h3" />
+            break;
+        case "arrow-right":
+            <path d="M4 12h16m-6-6 6 6-6 6" />
+            break;
+        case "arrow-up-right":
+            <path d="M6 18 18 6M6 6h12v12" />
+            break;
+        case "chevron-down":
+            <path d="m6 9 6 6 6-6" />
+            break;
+        case "pin":
+            <path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="2.5" />
+            break;
+        case "compass":
+            <circle cx="12" cy="12" r="9" /><path d="m16 8-2.5 5.5L8 16l2.5-5.5Z" />
+            break;
+        case "heart":
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+            break;
+        case "check":
+            <path d="m5 12 4 4L19 6" />
+            break;
+        case "search":
+            <circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" />
+            break;
+        case "menu":
+            <path d="M4 6h16M4 12h16M4 18h16" />
+            break;
+        case "close":
+            <path d="m6 6 12 12M6 18 18 6" />
+            break;
+        case "mountain":
+            <path d="m2 20 8-15 5 9 3-5 4 11ZM7 11l3 2 3-2" />
+            break;
+        case "leaf":
+            <path d="M20 4C10 2 3 7 5 14s15 9 15-10ZM5 20l10-11" />
+            break;
+        case "clock":
+            <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+            break;
+        default:
+            <circle cx="12" cy="12" r="4" />
+            break;
+    }
+</svg>
+
+@code {
+    [Parameter] public string Name { get; set; } = "star";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public int Size { get; set; } = 20;
+}
