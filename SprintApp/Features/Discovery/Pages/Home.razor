@@ -63,8 +63,8 @@
     <div class="guide-copy">
         <span class="eyebrow">THE SKY IS PART OF YOUR STAY</span><h2 id="guide-title">Less guesswork.<br /><em>More looking up.</em></h2>
         <p>A beautiful room is only half the story. Get to know the sky above it before you pack your bags.</p>
-        <div class="guide-tabs" role="tablist" aria-label="Learn about sky conditions"><button type="button" id="darkness-tab" role="tab" aria-selected="@((guideTab == "darkness").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "darkness" ? "selected" : "")" @onclick="ShowDarkness">Light pollution</button><button type="button" id="moon-tab" role="tab" aria-selected="@((guideTab == "moon").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "moon" ? "selected" : "")" @onclick="ShowMoon">Moon phase</button></div>
-        <div class="guide-panel" id="guide-panel" role="tabpanel" aria-labelledby="@(guideTab == "darkness" ? "darkness-tab" : "moon-tab")" tabindex="0">
+        <div class="guide-tabs" role="group" aria-label="Learn about sky conditions"><button type="button" id="darkness-tab" aria-pressed="@((guideTab == "darkness").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "darkness" ? "selected" : "")" @onclick="ShowDarkness">Light pollution</button><button type="button" id="moon-tab" aria-pressed="@((guideTab == "moon").ToString().ToLowerInvariant())" aria-controls="guide-panel" class="@(guideTab == "moon" ? "selected" : "")" @onclick="ShowMoon">Moon phase</button></div>
+        <div class="guide-panel" id="guide-panel" role="region" aria-labelledby="@(guideTab == "darkness" ? "darkness-tab" : "moon-tab")" tabindex="0">
             @if (guideTab == "darkness")
             {
                 <p>The Bortle scale describes sky darkness from 1 to 9. A lower number means less light pollution. Our sample collection highlights classes 1–3.</p>

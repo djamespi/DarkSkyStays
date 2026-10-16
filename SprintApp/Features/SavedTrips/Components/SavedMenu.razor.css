@@ -6,6 +6,7 @@
 .saved-dropdown .eyebrow { font-size: 7px; letter-spacing: 1.5px; margin-bottom: 14px; }
 .saved-dropdown a { display: flex; align-items: center; gap: 11px; font-size: 12px; color: #dbe7d0; padding: 13px 0; border-top: 1px solid #3a4e393f; }
 .saved-dropdown a:hover { color: #efffce; }
+.saved-dropdown a.view-collection { color: #d5edab; padding-block: 14px; margin-bottom: 5px; }
 .saved-dropdown a > span { flex: 1; }
 .saved-dropdown a > strong { display: inline-flex; min-width: 22px; height: 22px; align-items: center; justify-content: center; border: 1px solid #6c8257; border-radius: 50%; color: #d5edab; font-size: 10px; font-weight: 400; }
 .saved-dropdown ::deep svg { color: #b6d39b; }

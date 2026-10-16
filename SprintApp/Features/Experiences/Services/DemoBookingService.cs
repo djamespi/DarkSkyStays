@@ -8,6 +8,7 @@ namespace SprintApp.Features.Experiences.Services;
 public sealed class DemoBookingService
 {
     private readonly List<DemoBookingConfirmation> confirmations = [];
+    public event Action? Changed;
     public IReadOnlyList<DemoBookingConfirmation> Confirmations => confirmations.AsReadOnly();
 
     // The sprint is run in Singapore. Derive its date independently of the server's timezone.
@@ -47,6 +48,14 @@ public sealed class DemoBookingService
             experience.Name, experience.Destination.DisplayName, DateOnly.FromDateTime(request.Night!.Value),
             request.Guests, experience.PricePerPerson, guestName, request.Email.Trim(), DateTimeOffset.UtcNow);
         confirmations.Add(confirmation);
+        Changed?.Invoke();
         return true;
+    }
+
+    public bool Remove(string reference)
+    {
+        var removed = confirmations.RemoveAll(item => item.Reference == reference) > 0;
+        if (removed) Changed?.Invoke();
+        return removed;
     }
 }

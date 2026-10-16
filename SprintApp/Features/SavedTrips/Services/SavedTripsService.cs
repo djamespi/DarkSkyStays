@@ -27,4 +27,21 @@ public sealed class SavedTripsService
         Changed?.Invoke();
         return added;
     }
+
+    public IReadOnlyList<SavedTrip> Clear()
+    {
+        var removed = items.Values.ToArray();
+        if (removed.Length == 0) return removed;
+        items.Clear();
+        Changed?.Invoke();
+        return removed;
+    }
+
+    public void Restore(IEnumerable<SavedTrip> saved)
+    {
+        var changed = false;
+        foreach (var item in saved)
+            changed |= items.TryAdd((item.ItemType, item.ItemId), item);
+        if (changed) Changed?.Invoke();
+    }
 }

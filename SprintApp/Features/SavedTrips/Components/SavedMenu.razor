@@ -1,5 +1,7 @@
 @using SprintApp.Features.SavedTrips.Services
+@using SprintApp.Features.Experiences.Services
 @inject SavedTripsService SavedTrips
+@inject DemoBookingService Bookings
 @implements IDisposable
 
 <div class="saved-menu" @onkeydown="HandleKey">
@@ -7,16 +9,16 @@
     @if (isOpen)
     {
         <button type="button" class="saved-menu-dismiss" tabindex="-1" aria-label="Close saved menu" @onclick="CloseMenu"></button>
-        <div class="saved-dropdown" id="saved-menu-panel"><span class="eyebrow">YOUR LITTLE COLLECTION</span><a href="/stays?saved=true" @onclick="CloseMenu"><Icon Name="cabin" Size="17" /><span>Saved stays</span><strong>@SavedTrips.StayCount</strong></a><a href="/experiences?saved=true" @onclick="CloseMenu"><Icon Name="telescope" Size="17" /><span>Saved experiences</span><strong>@SavedTrips.ExperienceCount</strong></a><p>For this visit. Refreshing starts a new collection.</p></div>
+        <div class="saved-dropdown" id="saved-menu-panel"><span class="eyebrow">YOUR LITTLE COLLECTION</span><a class="view-collection" href="/saved-trips" @onclick="CloseMenu"><Icon Name="compass" Size="17" /><span>View your collection</span><Icon Name="arrow-up-right" Size="15" /></a><a href="/stays?saved=true" @onclick="CloseMenu"><Icon Name="cabin" Size="17" /><span>Saved stays</span><strong>@SavedTrips.StayCount</strong></a><a href="/experiences?saved=true" @onclick="CloseMenu"><Icon Name="telescope" Size="17" /><span>Saved experiences</span><strong>@SavedTrips.ExperienceCount</strong></a><a href="/saved-trips?view=bookings" @onclick="CloseMenu"><Icon Name="calendar" Size="17" /><span>Demo bookings</span><strong>@Bookings.Confirmations.Count</strong></a><p>For this visit. Refreshing starts a new collection.</p></div>
     }
 </div>
 
 @code {
     private bool isOpen;
     private ElementReference toggle;
-    protected override void OnInitialized() => SavedTrips.Changed += Refresh;
+    protected override void OnInitialized() { SavedTrips.Changed += Refresh; Bookings.Changed += Refresh; }
     private void Refresh() => _ = InvokeAsync(StateHasChanged);
     private async Task CloseMenu() { isOpen = false; await toggle.FocusAsync(); }
     private async Task HandleKey(KeyboardEventArgs args) { if (args.Key == "Escape") await CloseMenu(); }
-    public void Dispose() => SavedTrips.Changed -= Refresh;
+    public void Dispose() { SavedTrips.Changed -= Refresh; Bookings.Changed -= Refresh; }
 }
