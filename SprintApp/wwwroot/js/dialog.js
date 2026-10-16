@@ -30,6 +30,17 @@ export function close(element) {
     if (element.open) element.close();
 }
 
+export function focusStep(element) {
+    element.scrollTop = 0;
+    const heading = element.querySelector('[data-step-title]') || element.querySelector('h2');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+}
+
+export function focusErrors(element) {
+    const errors = element.querySelector('[data-validation-errors]');
+    if (errors) errors.focus();
+}
+
 export function detach(element) {
     if (!element) return;
     const events = handlers.get(element);

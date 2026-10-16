@@ -1,6 +1,7 @@
 using SprintApp.Components;
 using SprintApp.Features.SavedTrips.Services;
 using SprintApp.Features.Stays.Services;
+using SprintApp.Features.Experiences.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped<SavedTripsService>();
 builder.Services.AddScoped<StaySearchService>();
+builder.Services.AddScoped<ExperienceSearchService>();
+builder.Services.AddScoped<DemoBookingService>();
 
 var app = builder.Build();
 

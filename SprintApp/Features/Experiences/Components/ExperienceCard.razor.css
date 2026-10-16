@@ -1,0 +1,29 @@
+.tour-card { border: 1px solid #30403d; border-radius: 10px; overflow: hidden; background: #0e1923; transition: border-color .2s, transform .2s; }
+.tour-card:hover { border-color: #718264; transform: translateY(-3px); }
+.tour-image { position: relative; aspect-ratio: 1.95; overflow: hidden; background: #122635; }
+.tour-image > img { width: 100%; height: 100%; object-fit: cover; object-position: center 46%; transition: transform .7s; }
+.tour-card:hover .tour-image > img { transform: scale(1.035); }
+.tour-category { position: absolute; left: 18px; top: 17px; display: flex; align-items: center; gap: 7px; padding: 7px 10px; color: #e3eed8; background: #0b1926b8; border: 1px solid #b4c7a63d; border-radius: 4px; backdrop-filter: blur(8px); font-size: 9px; }
+.tour-save { position: absolute; top: 12px; right: 14px; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: #0d1b27c4; color: #c9dbbf; border: 1px solid #abc19c63; border-radius: 50%; backdrop-filter: blur(8px); }
+.tour-save:hover, .tour-save.is-saved { background: #d5edab; color: #1c291a; border-color: #d5edab; }
+.tour-save.is-saved ::deep svg { fill: currentColor; }
+.tour-image-note { position: absolute; bottom: 17px; left: 19px; display: flex; align-items: center; gap: 6px; color: #cfdfc0; font-size: 8px; letter-spacing: 1.2px; background: #07172485; padding: 5px 7px; border-radius: 3px; }
+.tour-content { padding: 25px 26px 21px; }
+.tour-location { display: flex; align-items: center; justify-content: space-between; gap: 15px; font-size: 10px; color: #96aaa5; }
+.tour-location > span { display: inline-flex; align-items: center; gap: 5px; }
+.tour-location > span:last-child { color: #d6e2c8; }
+.tour-location > span:last-child ::deep svg { fill: #d5edab; width: 9px; height: 9px; }
+.tour-content h3 { font: 29px/1.15 Georgia, serif; letter-spacing: -.4px; margin-top: 15px; max-width: 390px; min-height: 67px; }
+.tour-content h3 > button { border: 0; background: transparent; padding: 0; color: inherit; text-align: left; font: inherit; }
+.tour-content h3 > button:hover { color: #d5edab; }
+.tour-description { color: #91a6a3; font-size: 11px; line-height: 1.9; margin-top: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
+.tour-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 20px; font-size: 9px; color: #b8c9b1; }
+.tour-facts > span { display: flex; align-items: center; gap: 6px; }
+.tour-footer { display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #30403b; margin-top: 22px; padding-top: 18px; }
+.tour-footer strong { font-size: 22px; font-weight: 500; color: #e8eddf; }
+.tour-footer span { font-size: 10px; color: #92a797; }
+.tour-details-button { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 40px; border: 1px solid #667b50; border-radius: 5px; padding: 10px 13px; font-size: 10px; color: #d5edab; background: transparent; }
+.tour-details-button:hover { background: #d5edab12; }
+@media (max-width: 1000px) { .tour-content { padding-inline: 21px; }.tour-content h3 { font-size: 26px; min-height: 60px; }.tour-facts { gap: 9px; font-size: 8px; }.tour-details-button { gap: 12px; }.tour-location { font-size: 9px; } }
+@media (max-width: 600px) { .tour-image { aspect-ratio: 1.55; }.tour-content { padding: 22px 20px; }.tour-content h3 { font-size: 28px; min-height: 0; }.tour-description { margin-top: 16px; font-size: 11px; }.tour-location { font-size: 9px; gap: 10px; }.tour-category { left: 14px; top: 15px; font-size: 8px; }.tour-save { width: 40px; height: 40px; }.tour-facts { gap: 13px; font-size: 9px; margin-top: 19px; }.tour-footer { margin-top: 20px; }.tour-footer strong { font-size: 21px; }.tour-details-button { gap: 12px; font-size: 10px; padding: 10px 12px; min-height: 43px; }.tour-footer span { font-size: 9px; } }
+@media (max-width: 360px) { .tour-content { padding-inline: 17px; }.tour-content h3 { font-size: 26px; }.tour-facts { gap: 8px; font-size: 8px; }.tour-details-button { gap: 6px; padding-inline: 9px; font-size: 9px; }.tour-footer > div > span { font-size: 8px; } }

@@ -10,6 +10,7 @@ public sealed class SavedTripsService
     public event Action? Changed;
     public IReadOnlyCollection<SavedTrip> Items => items.Values.ToArray();
     public int StayCount => items.Keys.Count(key => key.Type == SavedItemType.Stay);
+    public int ExperienceCount => items.Keys.Count(key => key.Type == SavedItemType.Experience);
     public int Count => items.Count;
 
     public bool Contains(string id, SavedItemType type) => items.ContainsKey((type, id));

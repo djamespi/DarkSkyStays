@@ -1,7 +1,5 @@
 @inherits LayoutComponentBase
-@using SprintApp.Features.SavedTrips.Services
-@inject SavedTripsService SavedTrips
-@implements IDisposable
+@using SprintApp.Features.SavedTrips.Components
 
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="announcement"><Icon Name="sparkles" Size="13" /> A little further from the ordinary. A little closer to the stars.</div>
@@ -12,7 +10,7 @@
             <span>dark sky<span class="brand-second">S T A Y S</span></span>
         </a>
         <NavMenu />
-        <div class="header-actions"><a class="saved-header-link" href="/stays?saved=true" aria-label="View @SavedTrips.StayCount saved stays"><Icon Name="heart" Size="17" /><span>Saved</span><span class="saved-count">@SavedTrips.StayCount</span></a><a class="header-cta" href="/stays">Find your night <Icon Name="arrow-up-right" Size="16" /></a></div>
+        <div class="header-actions"><SavedMenu /><a class="header-cta" href="/stays">Find your night <Icon Name="arrow-up-right" Size="16" /></a></div>
     </div>
 </header>
 
@@ -30,9 +28,3 @@
 <div id="blazor-error-ui" role="alert">
     The connection to the stars was interrupted. <a href="" class="reload">Reload the page</a>
 </div>
-
-@code {
-    protected override void OnInitialized() => SavedTrips.Changed += RefreshSaved;
-    private void RefreshSaved() => _ = InvokeAsync(StateHasChanged);
-    public void Dispose() => SavedTrips.Changed -= RefreshSaved;
-}

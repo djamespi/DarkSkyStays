@@ -1,0 +1,13 @@
+.saved-menu { position: relative; }
+.saved-menu > .saved-header-link { position: relative; z-index: 3; background: transparent; border: 0; }
+.saved-menu > .saved-header-link:hover { color: #efffdc; }
+.saved-menu-dismiss { position: fixed; inset: 0; z-index: 1; background: transparent; border: 0; cursor: default; }
+.saved-dropdown { position: absolute; z-index: 2; right: 0; top: calc(100% + 14px); width: 264px; padding: 22px 19px 16px; background: #14221f; border: 1px solid #526746; border-radius: 8px; box-shadow: 0 15px 50px #0007; }
+.saved-dropdown .eyebrow { font-size: 7px; letter-spacing: 1.5px; margin-bottom: 14px; }
+.saved-dropdown a { display: flex; align-items: center; gap: 11px; font-size: 12px; color: #dbe7d0; padding: 13px 0; border-top: 1px solid #3a4e393f; }
+.saved-dropdown a:hover { color: #efffce; }
+.saved-dropdown a > span { flex: 1; }
+.saved-dropdown a > strong { display: inline-flex; min-width: 22px; height: 22px; align-items: center; justify-content: center; border: 1px solid #6c8257; border-radius: 50%; color: #d5edab; font-size: 10px; font-weight: 400; }
+.saved-dropdown ::deep svg { color: #b6d39b; }
+.saved-dropdown p { font-size: 9px; line-height: 1.8; color: #97ad8e; margin-top: 12px; }
+@media (max-width: 600px) { .saved-dropdown { right: -12px; top: calc(100% + 18px); width: min(264px, calc(100vw - 40px)); }.saved-menu .saved-header-link > span:not(.saved-count) { display: none; } }

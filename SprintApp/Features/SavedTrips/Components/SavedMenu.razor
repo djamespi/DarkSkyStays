@@ -1,0 +1,22 @@
+@using SprintApp.Features.SavedTrips.Services
+@inject SavedTripsService SavedTrips
+@implements IDisposable
+
+<div class="saved-menu" @onkeydown="HandleKey">
+    <button type="button" class="saved-header-link" @ref="toggle" aria-expanded="@isOpen.ToString().ToLowerInvariant()" aria-controls="saved-menu-panel" aria-label="Open your @SavedTrips.Count saved stays and experiences" @onclick="() => isOpen = !isOpen"><Icon Name="heart" Size="17" /><span>Saved</span><span class="saved-count">@SavedTrips.Count</span></button>
+    @if (isOpen)
+    {
+        <button type="button" class="saved-menu-dismiss" tabindex="-1" aria-label="Close saved menu" @onclick="CloseMenu"></button>
+        <div class="saved-dropdown" id="saved-menu-panel"><span class="eyebrow">YOUR LITTLE COLLECTION</span><a href="/stays?saved=true" @onclick="CloseMenu"><Icon Name="cabin" Size="17" /><span>Saved stays</span><strong>@SavedTrips.StayCount</strong></a><a href="/experiences?saved=true" @onclick="CloseMenu"><Icon Name="telescope" Size="17" /><span>Saved experiences</span><strong>@SavedTrips.ExperienceCount</strong></a><p>For this visit. Refreshing starts a new collection.</p></div>
+    }
+</div>
+
+@code {
+    private bool isOpen;
+    private ElementReference toggle;
+    protected override void OnInitialized() => SavedTrips.Changed += Refresh;
+    private void Refresh() => _ = InvokeAsync(StateHasChanged);
+    private async Task CloseMenu() { isOpen = false; await toggle.FocusAsync(); }
+    private async Task HandleKey(KeyboardEventArgs args) { if (args.Key == "Escape") await CloseMenu(); }
+    public void Dispose() => SavedTrips.Changed -= Refresh;
+}

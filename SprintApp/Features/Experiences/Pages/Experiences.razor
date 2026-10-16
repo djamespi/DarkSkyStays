@@ -1,0 +1,44 @@
+@page "/experiences"
+@inject ExperienceSearchService SearchService
+@inject SavedTripsService SavedTrips
+@inject NavigationManager Navigation
+@implements IDisposable
+
+<PageTitle>After dark — Dark Sky Stays</PageTitle>
+
+<section class="after-dark-intro"><img src="images/stay-forest.svg" alt="An illustrated aurora above a quiet northern forest" /><div class="after-dark-shade"></div><div class="page-width after-dark-content"><a href="/" class="after-dark-back"><Icon Name="arrow-left" Size="14" /> Back to discovering</a><span class="eyebrow">GOOD COMPANY. GREAT SKIES.</span><h1>The night has<br /><em>other plans for you.</em></h1><p>Follow a local. Find a constellation. Learn something new.<br />Make a little magic between sunset and sleep.</p><div class="after-dark-caption"><Icon Name="telescope" Size="23" /><span>A sky full of stories.<br /><strong>Someone lovely to tell them.</strong></span></div></div></section>
+
+<section class="page-width experiences-collection" aria-labelledby="experiences-page-title">
+    <div class="experience-category-tabs" role="group" aria-label="Experience category"><button type="button" class="@(filters.Type is null ? "selected" : "")" aria-pressed="@((filters.Type is null).ToString().ToLowerInvariant())" @onclick="() => filters.Type = null"><Icon Name="sparkles" Size="17" /> All the possibilities <span>@SampleExperiences.All.Count</span></button>@foreach (var type in Enum.GetValues<ExperienceType>()) { <button type="button" class="@(filters.Type == type ? "selected" : "")" aria-pressed="@((filters.Type == type).ToString().ToLowerInvariant())" @onclick="() => filters.Type = type"><Icon Name="@(type == ExperienceType.Stargazing ? "telescope" : type == ExperienceType.Astrophotography ? "camera" : "compass")" Size="17" /> @(type == ExperienceType.Stargazing ? "Stargazing" : type == ExperienceType.Astrophotography ? "Astrophotography" : "Night walks") <span>@SampleExperiences.All.Count(item => item.Type == type)</span></button> }</div>
+    <div class="experience-filter-panel"><div class="experience-search"><Icon Name="search" Size="18" /><label class="sr-only" for="experience-search">Search experiences, places, guides, or inclusions</label><input id="experience-search" type="search" placeholder="A constellation, a place, a cup of cocoa…" @bind="filters.Search" @bind:event="oninput" />@if (filters.Search.Length > 0) { <button type="button" aria-label="Clear experience search" @onclick="() => filters.Search = string.Empty"><Icon Name="close" Size="16" /></button> }</div><div class="experience-filter-grid"><div><label for="experience-destination">Somewhere special</label><select id="experience-destination" @bind="filters.DestinationId"><option value="">All destinations</option>@foreach (var place in SampleDestinations.All) { <option value="@place.Id">@place.DisplayName</option> }</select></div><div><label for="experience-budget">A comfortable budget</label><select id="experience-budget" @bind="filters.MaxPrice"><option value="100">Any price</option><option value="50">Up to $50 / person</option><option value="75">Up to $75 / person</option></select></div><div><label for="experience-duration">A little time away</label><select id="experience-duration" @bind="filters.MaxHours"><option value="3">Any duration</option><option value="2">Up to 2 hours</option><option value="1.5">Up to 1.5 hours</option></select></div><div><label for="experience-guests">Your people</label><select id="experience-guests" @bind="filters.Guests">@for (var guests = 1; guests <= 10; guests++) { <option value="@guests">@guests guest@(guests == 1 ? "" : "s")</option> }</select></div></div><div class="experience-filter-extras"><label><input type="checkbox" id="experience-pristine" @bind="filters.PristineSkies" /><Icon Name="sparkles" Size="13" /> Pristine skies · Bortle 1</label><label><input type="checkbox" id="experience-saved" @bind="filters.SavedOnly" /><Icon Name="heart" Size="13" /> Saved experiences (@SavedTrips.ExperienceCount)</label><button type="button" class="experience-reset" @onclick="ResetFilters">Reset filters <Icon Name="arrow-right" Size="14" /></button></div></div>
+    <div class="experiences-results-heading"><div><span class="eyebrow">LET THE NIGHT TAKE YOU SOMEWHERE</span><h2 id="experiences-page-title">@(filters.SavedOnly ? "Nights you've set your heart on." : "Nights worth staying up for.")</h2><p id="experience-result-count" role="status">@Results.Count experience@(Results.Count == 1 ? "" : "s") @(filters.HasFilters ? "matching your kind of adventure" : "with a little more wonder built in")</p></div><div class="experience-sort"><label for="experience-sort">Sort by</label><select id="experience-sort" @bind="filters.Sort"><option value="@ExperienceSort.Recommended">Our picks</option><option value="@ExperienceSort.PriceAscending">Price: low to high</option><option value="@ExperienceSort.PriceDescending">Price: high to low</option><option value="@ExperienceSort.DurationAscending">Shortest first</option></select></div></div>
+    @if (Results.Count > 0)
+    {
+        <div class="experience-grid grid grid-cols-1 gap-6 md:grid-cols-2">@foreach (var experience in Results) { <ExperienceCard @key="experience.Id" Experience="experience" OnDetails="OpenDetails" OnSaved="AnnounceSave" /> }</div>
+    }
+    else
+    {
+        <div class="empty-state experience-empty"><Icon Name="@(filters.SavedOnly ? "heart" : "compass")" Size="33" /><h3>@(filters.SavedOnly && SavedTrips.ExperienceCount == 0 ? "A night to fall in love with." : "A different adventure is waiting.")</h3><p>@(filters.SavedOnly && SavedTrips.ExperienceCount == 0 ? "Tap a heart on an experience that speaks to you. Your collection stays with you while you browse and resets when you refresh." : "No sample experiences match this combination. Try another destination, a wider budget, or a smaller group.")</p><button type="button" class="button button-lime" @onclick="ResetFilters">Explore all experiences <Icon Name="arrow-right" Size="16" /></button></div>
+    }
+    <div class="experience-good-to-know"><Icon Name="moon" Size="25" /><div><h3>A little preparation. A lot of possibility.</h3><p>Bring warm layers, comfortable shoes, and your curiosity. Check each experience for what's included. Nature keeps its own plans; clear skies and auroras are never guaranteed.</p></div><a href="/#sky-guide">Get to know your sky <Icon Name="arrow-up-right" Size="16" /></a></div>
+    <p class="experience-sample-note">Sample experiences, guides, prices, ratings, and sky conditions. Booking is a demonstration; no real reservation or payment is made.</p>
+</section>
+
+<ExperienceDialog Experience="selectedExperience" OnClose="CloseDetails" OnSaved="AnnounceSave" />
+<div class="save-notice @(string.IsNullOrEmpty(saveMessage) ? "is-hidden" : "")" role="status" aria-live="polite"><Icon Name="heart" Size="17" /><span>@saveMessage</span><button type="button" aria-label="Dismiss saved notification" @onclick="() => saveMessage = string.Empty"><Icon Name="close" Size="15" /></button></div>
+
+@code {
+    [Parameter, SupplyParameterFromQuery(Name = "saved")] public string? SavedQuery { get; set; }
+    private ExperienceFilters filters = new();
+    private TourExperience? selectedExperience;
+    private string saveMessage = "";
+    private IReadOnlyList<TourExperience> Results => SearchService.Search(filters);
+    protected override void OnInitialized() => SavedTrips.Changed += RefreshSaved;
+    protected override void OnParametersSet() { filters = new() { SavedOnly = bool.TryParse(SavedQuery, out var saved) && saved }; selectedExperience = null; }
+    private void ResetFilters() { filters = new(); saveMessage = ""; Navigation.NavigateTo("/experiences", replace: true); }
+    private void OpenDetails(TourExperience experience) => selectedExperience = experience;
+    private void CloseDetails() => selectedExperience = null;
+    private void AnnounceSave(string message) => saveMessage = message;
+    private void RefreshSaved() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => SavedTrips.Changed -= RefreshSaved;
+}

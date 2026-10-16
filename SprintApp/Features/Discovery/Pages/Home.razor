@@ -81,11 +81,11 @@
 </section>
 
 <section class="page-width section-space experiences-section" id="experiences" aria-labelledby="experiences-title">
-    <div class="section-heading"><div><span class="eyebrow">LET THE NIGHT TAKE YOU SOMEWHERE</span><h2 id="experiences-title">Make a little <em>after-dark magic.</em></h2><p>Good company. Local knowledge. A whole new way to see the world.</p></div><span class="editorial-note">Stay curious. Stay out a little longer. <Icon Name="sparkles" Size="17" /></span></div>
+    <div class="section-heading"><div><span class="eyebrow">LET THE NIGHT TAKE YOU SOMEWHERE</span><h2 id="experiences-title">Make a little <em>after-dark magic.</em></h2><p>Good company. Local knowledge. A whole new way to see the world.</p></div><a class="text-link" href="/experiences">Explore after dark <Icon Name="arrow-up-right" Size="17" /></a></div>
     <div class="experience-preview-grid grid gap-6 md:grid-cols-2">
         @foreach (var experience in SampleExperiences.All.Take(2))
         {
-            <article class="experience-preview"><img src="@experience.ImageUrl" alt="@experience.Destination.Region night-sky illustration" loading="lazy" /><div class="experience-overlay"></div><div class="experience-preview-content"><span class="experience-kicker"><Icon Name="compass" Size="14" /> @experience.DurationHours.ToString("0.#") HOURS · SMALL GROUP</span><h3>@experience.Name</h3><div><span>@experience.Destination.Region</span><span>From <strong>$@experience.PricePerPerson.ToString("0")</strong> / person</span></div><button type="button" class="experience-read" @onclick="() => expandedExperience = expandedExperience == experience.Id ? null : experience.Id" aria-expanded="@((expandedExperience == experience.Id).ToString().ToLowerInvariant())" aria-controls="experience-@experience.Id">@(expandedExperience == experience.Id ? "Close story" : "A little more about this night") <Icon Name="arrow-right" Size="16" /></button>@if (expandedExperience == experience.Id) { <p class="experience-description" id="experience-@experience.Id">@experience.Description</p> }</div></article>
+            <article class="experience-preview"><img src="@experience.ImageUrl" alt="@experience.Destination.Region night-sky illustration" loading="lazy" /><div class="experience-overlay"></div><div class="experience-preview-content"><span class="experience-kicker"><Icon Name="compass" Size="14" /> @experience.DurationHours.ToString("0.#") HOURS · SMALL GROUP</span><h3>@experience.Name</h3><div><span>@experience.Destination.Region</span><span>From <strong>$@experience.PricePerPerson.ToString("0")</strong> / person</span></div><button type="button" class="experience-read" @onclick="() => selectedExperience = experience" aria-label="Explore @experience.Name">Explore this night <Icon Name="arrow-right" Size="16" /></button></div></article>
         }
     </div>
 </section>
@@ -93,6 +93,7 @@
 <section class="closing-note page-width"><Icon Name="sparkles" Size="30" /><p>Some of the best things in life<br />happen when you <em>look up.</em></p><a href="/stays" class="text-link">Find your somewhere <Icon Name="arrow-up-right" Size="16" /></a></section>
 
 <StayDetailsDialog Stay="selectedStay" OnClose="CloseDetails" OnSaved="AnnounceSave" />
+<ExperienceDialog Experience="selectedExperience" OnClose="() => selectedExperience = null" OnSaved="AnnounceSave" />
 <div class="save-notice @(string.IsNullOrEmpty(saveMessage) ? "is-hidden" : "")" role="status" aria-live="polite"><Icon Name="heart" Size="17" /><span>@saveMessage</span><button type="button" aria-label="Dismiss saved notification" @onclick="() => saveMessage = string.Empty"><Icon Name="close" Size="15" /></button></div>
 
 @code {
@@ -100,7 +101,7 @@
     private int maxBortle = 9;
     private Stay? selectedStay;
     private string saveMessage = "";
-    private string? expandedExperience;
+    private TourExperience? selectedExperience;
     private string guideTab = "darkness";
 
     protected override void OnInitialized() => SavedTrips.Changed += RefreshSaved;
