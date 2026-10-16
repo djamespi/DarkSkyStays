@@ -2,7 +2,7 @@
 
 A hospitality and tourism prototype for finding beautiful stays and memorable experiences under dark skies.
 
-Built with .NET 8, Blazor Interactive Server, C#, and Tailwind CSS 4. No database, API keys, or external data service is required. Listings, prices, ratings, and sky conditions are fictional demonstration data. Original SVG illustrations are stored locally.
+Built with .NET 8, Blazor Interactive Server, C#, and Tailwind CSS 4. No database, API keys, or external data service is required. Listings, prices, ratings, and sky conditions are fictional demonstration data. Illustrations and the supplied Milky Way photograph are stored locally.
 
 ## Run locally
 
@@ -39,7 +39,7 @@ SprintApp/
     Layout/          Application shell and navigation
     Shared/          Shared icons and UI
   Styles/            Tailwind source
-  wwwroot/images/    Original local illustrations
+  wwwroot/images/    Local illustrations and supplied Milky Way photograph
 ```
 
 Each feature owns its models, data, pages, and components as needed. Application layout and reusable visual elements stay in `Components`.
@@ -60,6 +60,8 @@ The subsequent visual update uses `style: apply violet night sky component desig
 The supplied `DESIGN.md` informed the component styling: near-black and violet colors, a drifting star field, translucent navigation and search, Fraunces headings, Space Grotesk UI text, rounded cards, glowing buttons, alternating tour rows, and nine-color Bortle indicators. The existing four pages, international sample catalog, USD prices, filtering, saving, simulated bookings, and collection export remain in place. The layouts remain responsive. Moon icons render each listing's sample illumination; the header explicitly labels its readout as a sample.
 
 Shared theme tokens and font declarations live in `SprintApp/wwwroot/app.css`, with matching Tailwind tokens in `SprintApp/Styles/tailwind.css`. Feature components retain their own scoped styles. `Features/Sky/Components` owns the reusable moon icon and Bortle bar.
+
+Home, Stays, and Experiences use the supplied `milky-way-landscape.png` as their banner photograph. Shared CSS layers add the guide's violet tint, ambient glow, and fade into the near-black page background while retaining the original image file. The global drifting stars and glass surfaces continue across the site; reduced-motion settings stop the animation.
 
 Fonts ship locally in `SprintApp/wwwroot/fonts` under the SIL Open Font License; their licenses are included alongside the assets. Their sources are the Google Fonts repositories for [Fraunces](https://github.com/google/fonts/tree/main/ofl/fraunces) and [Space Grotesk](https://github.com/google/fonts/tree/main/ofl/spacegrotesk). No font service is contacted while using the app. To re-download these assets and licenses, run `node tools/download-design-fonts.mjs` from `SprintApp` with internet access. The star-field animation respects reduced-motion settings.
 
