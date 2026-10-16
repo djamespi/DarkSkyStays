@@ -22,8 +22,12 @@ function dome(x, y) {
   return `<g transform="translate(${x} ${y})"><ellipse cx="0" cy="76" rx="165" ry="38" fill="#d7994f" opacity=".16" filter="url(#soft)"/><path d="M-110 65a110 110 0 0 1 220 0Z" fill="url(#dome)" stroke="#ae9e82" stroke-width="2"/><path d="M-110 65 0-45 110 65M-78-10 78-10M-104 31 104 31M-78-10-45 65 0-45 45 65 78-10M-104 31-78-10 0 31 78-10 104 31M-45 65 0 31 45 65" stroke="#2a383a" stroke-width="2" fill="none" opacity=".8"/><path d="M-18 65V18a18 18 0 0 1 36 0v47Z" fill="#d7aa67" stroke="#354044" stroke-width="3"/><path d="M0 5v60" stroke="#81724d"/><path d="M-123 69h245v9h-245Z" fill="#30312c"/></g>`;
 }
 
+function tent(x, y) {
+  return `<g transform="translate(${x} ${y})"><ellipse cx="0" cy="76" rx="155" ry="30" fill="#d7994f" opacity=".14" filter="url(#soft)"/><path d="M-119 65-22-42 34-34 119 65Z" fill="#78644e" stroke="#a99169" stroke-width="2"/><path d="M-119 65-22-42 65 65Z" fill="#b0956a"/><path d="M-80 65-22-23 28 65Z" fill="url(#window)"/><path d="M-80 65-22-23-33 65Z" fill="#d3b381"/><path d="m-22-23 50 88-34-8Z" fill="#b79c73"/><path d="M-22-42-22-55M-139 78-22-42 137 77" fill="none" stroke="#d2bc8b" stroke-width="2"/><path d="M-126 73h250" stroke="#514735" stroke-width="5"/><path d="M-141 76v10m279-10v10" stroke="#9c845a" stroke-width="3"/></g>`;
+}
+
 function landscape(style) {
-  const desert = style === 'desert', forest = style === 'forest';
+  const desert = style === 'desert' || style === 'glamping', forest = style === 'forest' || style === 'fjord';
   const sky = desert ? ['#10182a', '#35445a', '#9b6c62'] : forest ? ['#071721', '#123c44', '#476b6b'] : ['#071323', '#173749', '#65858b'];
   const mountain = desert ? ['#555068', '#3c354b', '#292737', '#161c2a'] : forest ? ['#476265', '#24474b', '#17363c', '#0b232b'] : ['#405e73', '#2d4b62', '#1a384b', '#0e2837'];
   let reflection = '';
@@ -39,7 +43,7 @@ function landscape(style) {
     }
     for (let i = 0; i < 12; i++) trees += tree(930 + i * 24, 610 + random() * 38, .22 + random() * .4, '#10272b');
   }
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Illustrated ${desert ? 'desert dome' : forest ? 'northern forest cabin' : 'alpine lakeside cabin'} under a starry sky">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Illustrated ${style === 'glamping' ? 'canvas tent in the desert' : style === 'fjord' ? 'dome by a northern fjord' : desert ? 'desert dome' : forest ? 'northern forest cabin' : 'alpine lakeside cabin'} under a starry sky">
   <defs>
     <linearGradient id="sky" x2="0" y2="1"><stop stop-color="${sky[0]}"/><stop offset=".6" stop-color="${sky[1]}"/><stop offset="1" stop-color="${sky[2]}"/></linearGradient>
     <linearGradient id="water" x2="0" y2="1"><stop stop-color="#294858"/><stop offset="1" stop-color="#081a26"/></linearGradient>
@@ -68,7 +72,7 @@ function landscape(style) {
   <path d="M0 700Q210 665 455 706T825 694Q1020 648 1220 681T1600 645V900H1585Q1370 783 1145 755T640 803Q350 756 0 850Z" fill="${mountain[3]}"/>
   ${!desert ? reflection : '<path d="M0 825Q360 710 720 814T1600 770V900H0Z" fill="#242635"/>'}
   <ellipse cx="1120" cy="708" rx="190" ry="40" fill="#d6a259" opacity=".1" filter="url(#soft)"/>
-  ${desert ? dome(1115, 620) : cabin(1150, 625, forest ? 1.25 : 1.05)}
+  ${style === 'glamping' ? tent(1115, 620) : desert || style === 'fjord' ? dome(1115, 620) : cabin(1150, 625, forest ? 1.25 : 1.05)}
   ${trees}
   <path d="M0 849Q120 788 300 844T630 864L690 900H0ZM1380 830Q1500 793 1600 809V900h-270Z" fill="#06131b"/>
   <g opacity=".4" fill="#34505a"><ellipse cx="905" cy="790" rx="12" ry="3"/><ellipse cx="823" cy="840" rx="24" ry="4"/><ellipse cx="690" cy="810" rx="15" ry="2"/></g>
@@ -82,4 +86,6 @@ save('night-landscape.svg', alpine);
 save('stay-alpine.svg', alpine);
 save('stay-desert.svg', landscape('desert'));
 save('stay-forest.svg', landscape('forest'));
-console.log('Created four local night-sky illustrations.');
+save('stay-fjord.svg', landscape('fjord'));
+save('stay-camp.svg', landscape('glamping'));
+console.log('Created six local night-sky illustrations.');

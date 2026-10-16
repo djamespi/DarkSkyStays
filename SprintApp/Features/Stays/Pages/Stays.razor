@@ -1,0 +1,88 @@
+@page "/stays"
+@inject StaySearchService SearchService
+@inject SavedTripsService SavedTrips
+@inject NavigationManager Navigation
+@implements IDisposable
+
+<PageTitle>The stays — Dark Sky Stays</PageTitle>
+
+<section class="collection-intro">
+    <img src="images/night-landscape.svg" alt="" class="collection-intro-art" />
+    <div class="page-width collection-intro-inner">
+        <a class="collection-back" href="/"><Icon Name="arrow-left" Size="14" /> Back to discovering</a>
+        <span class="eyebrow">THE STAY IS ONLY THE BEGINNING</span>
+        <h1>Find your place<br /><em>under a darker sky.</em></h1>
+        <p>Cabins, domes, and quiet little escapes.<br />Every one with a reason to stay up a little later.</p>
+        <div class="collection-intro-note"><Icon Name="sparkles" Size="18" /><span><strong>Six tucked-away places.</strong><br />Infinite possibilities.</span></div>
+    </div>
+</section>
+
+<section class="page-width collection-layout" aria-label="Find a stay">
+    <aside class="filter-panel @(filtersOpen ? "is-open" : "")" aria-label="Stay filters">
+        <div class="filter-heading"><span><Icon Name="sliders" Size="17" /> Your kind of escape</span><button type="button" class="filter-toggle" aria-expanded="@filtersOpen.ToString().ToLowerInvariant()" aria-controls="stay-filters" @onclick="() => filtersOpen = !filtersOpen"><Icon Name="@(filtersOpen ? "close" : "chevron-down")" Size="19" /><span class="sr-only">Toggle filters</span></button></div>
+        <div class="filter-body" id="stay-filters">
+            <div class="filter-group"><label for="stay-destination">Somewhere special</label><select id="stay-destination" @bind="filters.DestinationId"><option value="">All destinations</option>@foreach (var place in SampleDestinations.All) { <option value="@place.Id">@place.DisplayName</option> }</select></div>
+            <div class="filter-group"><label for="stay-guests">Room for your people</label><select id="stay-guests" @bind="filters.Guests">@for (var guests = 1; guests <= 6; guests++) { <option value="@guests">@guests guest@(guests == 1 ? "" : "s")</option> }</select></div>
+            <div class="filter-group"><label for="stay-budget">A comfortable budget <span>$@filters.MaxPrice</span></label><input type="range" id="stay-budget" min="100" max="350" step="5" @bind="filters.MaxPrice" @bind:event="oninput" aria-valuetext="Up to @filters.MaxPrice US dollars per night" /><div class="filter-range-labels"><span>$100</span><span>USD / night</span><span>$350</span></div></div>
+            <fieldset class="filter-group darkness-filter"><legend>How dark do you dream?</legend><div class="darkness-options">@foreach (var bortle in new[] { 9, 1, 2, 3 }) { <button type="button" class="@(filters.MaxBortle == bortle ? "selected" : "")" aria-pressed="@((filters.MaxBortle == bortle).ToString().ToLowerInvariant())" @onclick="() => filters.MaxBortle = bortle">@(bortle == 9 ? "Any sky" : $"Bortle 1{(bortle == 1 ? "" : $"–{bortle}")}")</button> }</div><p>Lower Bortle numbers mean darker skies.</p></fieldset>
+            <div class="filter-group filter-checks"><label><input type="checkbox" id="low-moon" @bind="filters.LowMoonlight" /><span>Less moon, more stars<small>15% illumination or less</small></span><Icon Name="moon" Size="16" /></label><label><input type="checkbox" id="saved-only" @bind="filters.SavedOnly" /><span>Just my saved stays<small>@SavedTrips.StayCount saved for this visit</small></span><Icon Name="heart" Size="16" /></label></div>
+            <button type="button" class="filter-reset" @onclick="ResetFilters">Reset all filters <Icon Name="arrow-right" Size="14" /></button>
+            <div class="filter-tip"><Icon Name="moon" Size="23" /><h3>The sky is part of the story.</h3><p>Not sure what Bortle or moon phase means? A little sky know-how goes a long way.</p><a href="/#sky-guide">Get to know your sky <Icon Name="arrow-up-right" Size="13" /></a></div>
+        </div>
+    </aside>
+
+    <div class="collection-results">
+        <div class="collection-search"><Icon Name="search" Size="18" /><label class="sr-only" for="stay-search">Search stays, destinations, or amenities</label><input type="search" id="stay-search" placeholder="A place, a feeling, a telescope…" @bind="filters.Search" @bind:event="oninput" />@if (filters.Search.Length > 0) { <button type="button" aria-label="Clear search" @onclick="() => filters.Search = string.Empty"><Icon Name="close" Size="17" /></button> }</div>
+        <div class="stay-type-tabs" role="group" aria-label="Type of stay"><button type="button" aria-pressed="@((filters.Type is null).ToString().ToLowerInvariant())" class="@(filters.Type is null ? "selected" : "")" @onclick="() => filters.Type = null"><Icon Name="compass" Size="16" /> All stays <span>6</span></button>@foreach (var type in Enum.GetValues<StayType>()) { <button type="button" aria-pressed="@((filters.Type == type).ToString().ToLowerInvariant())" class="@(filters.Type == type ? "selected" : "")" @onclick="() => filters.Type = type"><Icon Name="@(type == StayType.Cabin ? "cabin" : type == StayType.Dome ? "dome" : "tent")" Size="17" /> @(type == StayType.Cabin ? "Cabins" : type == StayType.Dome ? "Domes" : "Glamping") <span>@SampleStays.All.Count(stay => stay.Type == type)</span></button> }</div>
+        <div class="results-heading"><div><span class="eyebrow">FIND YOUR SOMEWHERE</span><h2>@(filters.SavedOnly ? "Your little collection." : "A good night awaits.")</h2><p role="status" id="stay-result-count">@Results.Count stay@(Results.Count == 1 ? "" : "s") @(filters.HasFilters ? "matching your kind of night" : "away from the everyday")</p></div><div class="sort-field"><label for="stay-sort">Sort by</label><select id="stay-sort" @bind="filters.Sort"><option value="@StaySort.Recommended">Our picks</option><option value="@StaySort.PriceAscending">Price: low to high</option><option value="@StaySort.PriceDescending">Price: high to low</option><option value="@StaySort.DarkestSkies">Darkest skies</option><option value="@StaySort.HighestRated">Highest rated</option></select></div></div>
+        @if (filters.HasFilters)
+        {
+            <div class="active-filters"><span><Icon Name="sliders" Size="13" /> A little more you.</span><button type="button" @onclick="ResetFilters">Clear filters <Icon Name="close" Size="13" /></button></div>
+        }
+        @if (Results.Count > 0)
+        {
+            <div class="stay-grid collection-grid grid grid-cols-1 gap-6 md:grid-cols-2">@foreach (var stay in Results) { <StayCard @key="stay.Id" Stay="stay" OnDetails="OpenDetails" OnSaved="AnnounceSave" /> }</div>
+            <div class="collection-end"><Icon Name="sparkles" Size="18" /><span>A small collection. A sky full of possibility.</span></div>
+        }
+        else
+        {
+            <div class="empty-state collection-empty"><Icon Name="@(filters.SavedOnly ? "heart" : "moon")" Size="34" /><h3>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Make room for a little wonder." : "A different sky is waiting.")</h3><p>@(filters.SavedOnly && SavedTrips.StayCount == 0 ? "Tap the heart on a stay you love. Your favorites stay together while you explore; refreshing starts a new collection." : "No stays match these filters. Try a different destination, a higher budget, or a wider sky preference.")</p><button type="button" class="button button-lime" @onclick="ResetFilters">Explore all stays <Icon Name="arrow-right" Size="17" /></button></div>
+        }
+        <p class="collection-disclaimer">A little imagination goes a long way. Listings, reviews, rates, and sky conditions are sample data.</p>
+    </div>
+</section>
+
+<StayDetailsDialog Stay="selectedStay" OnClose="CloseDetails" OnSaved="AnnounceSave" />
+<div class="save-notice @(string.IsNullOrEmpty(saveMessage) ? "is-hidden" : "")" role="status" aria-live="polite"><Icon Name="heart" Size="17" /><span>@saveMessage</span><button type="button" aria-label="Dismiss saved notification" @onclick="() => saveMessage = string.Empty"><Icon Name="close" Size="15" /></button></div>
+
+@code {
+    [Parameter, SupplyParameterFromQuery(Name = "destination")] public string? DestinationQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name = "bortle")] public string? BortleQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name = "saved")] public string? SavedQuery { get; set; }
+
+    private StayFilters filters = new();
+    private bool filtersOpen;
+    private Stay? selectedStay;
+    private string saveMessage = "";
+    private IReadOnlyList<Stay> Results => SearchService.Search(filters);
+
+    protected override void OnInitialized() => SavedTrips.Changed += RefreshSaved;
+
+    protected override void OnParametersSet()
+    {
+        filters = new StayFilters
+        {
+            DestinationId = SampleDestinations.All.Any(place => place.Id == DestinationQuery) ? DestinationQuery! : "",
+            MaxBortle = int.TryParse(BortleQuery, out var bortle) && bortle is >= 1 and <= 9 ? bortle : 9,
+            SavedOnly = bool.TryParse(SavedQuery, out var saved) && saved
+        };
+        selectedStay = null;
+    }
+
+    private void ResetFilters() { filters = new(); saveMessage = ""; Navigation.NavigateTo("/stays", replace: true); }
+    private void OpenDetails(Stay stay) => selectedStay = stay;
+    private void CloseDetails() => selectedStay = null;
+    private void AnnounceSave(string message) => saveMessage = message;
+    private void RefreshSaved() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => SavedTrips.Changed -= RefreshSaved;
+}

@@ -1,4 +1,7 @@
 @page "/"
+@inject NavigationManager Navigation
+@inject SavedTripsService SavedTrips
+@implements IDisposable
 
 <PageTitle>Dark Sky Stays — A little closer to the stars</PageTitle>
 
@@ -10,7 +13,7 @@
             <span class="eyebrow hero-eyebrow"><span class="status-dot"></span> CHECK OUT. LOOK UP.</span>
             <h1 id="hero-title">Stay somewhere<br />the stars <em>still shine.</em></h1>
             <p>Extraordinary stays. Unforgettable night skies.<br class="desktop-break" /> Find a little space between you and the everyday.</p>
-            <a class="button button-lime" href="#stays">Explore the stays <Icon Name="arrow-up-right" Size="19" /></a>
+            <a class="button button-lime" href="/stays">Explore the stays <Icon Name="arrow-up-right" Size="19" /></a>
             <span class="hero-footnote"><Icon Name="compass" Size="15" /> A world of wonder, away from the glow.</span>
         </div>
         <div class="hero-coordinate"><span>44°00′ S &nbsp; 170°28′ E</span><span>Aoraki / Mackenzie, New Zealand</span></div>
@@ -46,33 +49,13 @@
 </div>
 
 <section class="page-width stays-section section-space" id="stays" aria-labelledby="stays-title">
-    <div class="section-heading"><div><span class="eyebrow">GOOD NIGHTS START HERE</span><h2 id="stays-title">Off the grid.<br class="mobile-break" /> <em>Into the extraordinary.</em></h2><p>Cozy corners of the world with a front-row seat to the universe.</p></div><button type="button" class="text-link" @onclick="ShowAllStays">@(showAll ? "Show a little less" : "Meet the collection") <Icon Name="arrow-right" Size="17" /></button></div>
-    @if (searched)
-    {
-        <div class="search-feedback" role="status">@FilteredStays.Count() stay@(FilteredStays.Count() == 1 ? "" : "s") found for your kind of night. <button type="button" @onclick="ResetSearch">Reset filters</button></div>
-    }
+    <div class="section-heading"><div><span class="eyebrow">GOOD NIGHTS START HERE</span><h2 id="stays-title">Off the grid.<br class="mobile-break" /> <em>Into the extraordinary.</em></h2><p>Cozy corners of the world with a front-row seat to the universe.</p></div><a class="text-link" href="/stays">Meet the collection <Icon Name="arrow-right" Size="17" /></a></div>
     <div class="stay-grid grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        @foreach (var stay in VisibleStays)
+        @foreach (var stay in SampleStays.All.Take(3))
         {
-            <article class="stay-card" @key="stay.Id">
-                <div class="stay-image"><img src="@stay.ImageUrl" alt="@stay.ImageDescription" loading="lazy" /><span class="darkness-badge"><Icon Name="sparkles" Size="12" /> BORTLE @stay.Sky.BortleClass <span>· @stay.Sky.DarknessLabel</span></span><span class="stay-type">@stay.Type</span></div>
-                <div class="stay-info">
-                    <div class="stay-location"><span><Icon Name="pin" Size="13" /> @stay.Destination.DisplayName</span><span class="rating"><Icon Name="star" Size="12" /> @stay.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</span></div>
-                    <h3>@stay.Name</h3>
-                    <p class="stay-sky"><Icon Name="moon" Size="14" /> @stay.Sky.MoonPhaseLabel <span>·</span> @stay.Sky.MoonIlluminationPercent% illuminated</p>
-                    <div class="stay-bottom"><span><strong>$@stay.PricePerNight.ToString("0")</strong> / night</span><button type="button" class="round-button" aria-label="Read about @stay.Name" aria-expanded="@((expandedStay == stay.Id).ToString().ToLowerInvariant())" aria-controls="details-@stay.Id" @onclick="() => ToggleStay(stay.Id)"><Icon Name="@(expandedStay == stay.Id ? "close" : "arrow-up-right")" Size="19" /></button></div>
-                    @if (expandedStay == stay.Id)
-                    {
-                        <div class="stay-expanded" id="details-@stay.Id"><p>@stay.Description</p><ul>@foreach (var amenity in stay.Amenities) { <li><Icon Name="check" Size="12" /> @amenity</li> }</ul><span>Up to @stay.MaxGuests guests · @stay.ReviewCount sample reviews</span></div>
-                    }
-                </div>
-            </article>
+            <StayCard @key="stay.Id" Stay="stay" OnDetails="OpenDetails" OnSaved="AnnounceSave" />
         }
     </div>
-    @if (!FilteredStays.Any())
-    {
-        <div class="empty-state"><Icon Name="moon" Size="32" /><h3>A different sky is waiting.</h3><p>No sample stays match this combination. Try another destination or a wider sky preference.</p><button type="button" class="button button-lime" @onclick="ResetSearch">Explore all stays</button></div>
-    }
 </section>
 
 <section class="sky-guide page-width" id="sky-guide" aria-labelledby="guide-title">
@@ -107,44 +90,26 @@
     </div>
 </section>
 
-<section class="closing-note page-width"><Icon Name="sparkles" Size="30" /><p>Some of the best things in life<br />happen when you <em>look up.</em></p><a href="#stays" class="text-link">Find your somewhere <Icon Name="arrow-up-right" Size="16" /></a></section>
+<section class="closing-note page-width"><Icon Name="sparkles" Size="30" /><p>Some of the best things in life<br />happen when you <em>look up.</em></p><a href="/stays" class="text-link">Find your somewhere <Icon Name="arrow-up-right" Size="16" /></a></section>
+
+<StayDetailsDialog Stay="selectedStay" OnClose="CloseDetails" OnSaved="AnnounceSave" />
+<div class="save-notice @(string.IsNullOrEmpty(saveMessage) ? "is-hidden" : "")" role="status" aria-live="polite"><Icon Name="heart" Size="17" /><span>@saveMessage</span><button type="button" aria-label="Dismiss saved notification" @onclick="() => saveMessage = string.Empty"><Icon Name="close" Size="15" /></button></div>
 
 @code {
     private string destination = "";
     private int maxBortle = 9;
-    private string appliedDestination = "";
-    private int appliedMaxBortle = 9;
-    private bool searched;
-    private bool showAll;
-    private string? expandedStay;
+    private Stay? selectedStay;
+    private string saveMessage = "";
     private string? expandedExperience;
     private string guideTab = "darkness";
 
-    private IEnumerable<Stay> FilteredStays => SampleStays.All.Where(stay =>
-        (string.IsNullOrEmpty(appliedDestination) || stay.Destination.Id == appliedDestination)
-        && stay.Sky.BortleClass <= appliedMaxBortle);
-    private IEnumerable<Stay> VisibleStays => showAll ? FilteredStays : FilteredStays.Take(3);
-
-    private void FindStays()
-    {
-        appliedDestination = destination;
-        appliedMaxBortle = maxBortle;
-        searched = true;
-        showAll = true;
-        expandedStay = null;
-    }
-
-    private void ResetSearch()
-    {
-        destination = appliedDestination = "";
-        maxBortle = appliedMaxBortle = 9;
-        searched = false;
-        showAll = false;
-        expandedStay = null;
-    }
-
-    private void ShowAllStays() => showAll = !showAll;
-    private void ToggleStay(string id) => expandedStay = expandedStay == id ? null : id;
+    protected override void OnInitialized() => SavedTrips.Changed += RefreshSaved;
+    private void FindStays() => Navigation.NavigateTo($"/stays?destination={Uri.EscapeDataString(destination)}&bortle={maxBortle}");
+    private void OpenDetails(Stay stay) => selectedStay = stay;
+    private void CloseDetails() => selectedStay = null;
+    private void AnnounceSave(string message) => saveMessage = message;
+    private void RefreshSaved() => _ = InvokeAsync(StateHasChanged);
+    public void Dispose() => SavedTrips.Changed -= RefreshSaved;
     private void ShowDarkness() => guideTab = "darkness";
     private void ShowMoon() => guideTab = "moon";
 }

@@ -1,10 +1,14 @@
 using SprintApp.Components;
+using SprintApp.Features.SavedTrips.Services;
+using SprintApp.Features.Stays.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped<SavedTripsService>();
+builder.Services.AddScoped<StaySearchService>();
 
 var app = builder.Build();
 

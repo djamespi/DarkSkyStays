@@ -53,6 +53,16 @@ Each feature owns its models, data, pages, and components as needed. Application
 
 The completed sprint will have three required pages (Home, Stays, Experiences) and one optional page (Saved Trips). Work stops after each stage for review.
 
+## Current features (through Part 2)
+
+- `/`: discovery home page with accommodation previews, a search that opens the Stays page, an educational sky guide, and experience previews.
+- `/stays`: live text, destination, type, guest-capacity, budget, Bortle-class, low-moonlight, and saved-only filters. Five sort options, empty results, and reset controls are included.
+- Stay cards and accessible details dialogs are reused by Home and Stays. Details show amenities, guest capacity, sample reviews, nightly price, and illustrative sky conditions.
+- Hearts add and remove stays from a shared, circuit-scoped collection. Favorites survive navigation within the app but reset on refresh or a new visit; there is no database or browser storage. The header opens saved stays within the Stays page. A separate Saved Trips page is planned for Part 4.
+- Mobile filters collapse, and the native modal supports focus management, Escape, backdrop dismissal, and a close button.
+
+Feature services live with their feature: `Stays/Services/StaySearchService.cs` handles search and sorting; `SavedTrips/Services/SavedTripsService.cs` owns saved items. Pages hold presentation state and compose reusable components.
+
 ## Sky guide references
 
 The educational guide uses general background from [NASA's sky quality guide](https://science.nasa.gov/solar-system/skywatching/night-sky-network/check-your-sky-quality-with-orion/) and [DarkSky International's sky quality survey guide](https://darksky.org/resources/guides-and-how-tos/how-to-conduct-a-night-sky-quality-survey/0/). These are background reading; the app does not fetch forecasts or claim that the sample sky conditions are current.

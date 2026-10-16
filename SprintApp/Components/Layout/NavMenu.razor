@@ -3,7 +3,7 @@
 </button>
 <nav id="primary-nav" class="primary-nav @(menuOpen ? "is-open" : "")" aria-label="Main navigation">
     <NavLink href="/" Match="NavLinkMatch.All" @onclick="CloseMenu">Discover</NavLink>
-    <a href="/#stays" @onclick="CloseMenu">The stays</a>
+    <NavLink href="/stays" @onclick="CloseMenu">The stays</NavLink>
     <a href="/#experiences" @onclick="CloseMenu">After dark</a>
     <a href="/#sky-guide" @onclick="CloseMenu">Our sky guide <Icon Name="sparkles" Size="13" /></a>
 </nav>

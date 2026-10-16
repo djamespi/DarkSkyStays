@@ -25,7 +25,7 @@ public static class SampleStays
             ["Glass-fronted bedroom", "Sauna", "Warm blankets", "Forest trails"]),
         new("joshua-camp", "Juniper Moon Camp", SampleDestinations.JoshuaTree, StayType.Glamping,
             "Canvas walls, thoughtful comforts, and an open desert horizon. Settle into a hammock after sunset and find your favorite constellation.",
-            125m, 4.87, 49, 2, "images/stay-desert.svg", "A secluded desert retreat beneath the stars",
+            125m, 4.87, 49, 2, "images/stay-camp.svg", "A warmly lit canvas tent in a secluded desert camp beneath the stars",
             new(3, MoonPhase.FirstQuarter, 48, 6, "12:00 AM – 3:00 AM"),
             ["Canvas tent", "Outdoor firepit", "Hammock", "Shared telescope"]),
         new("jasper-lodge", "Stillwater Alpine Lodge", SampleDestinations.Jasper, StayType.Cabin,
@@ -35,7 +35,7 @@ public static class SampleStays
             ["Three bedrooms", "Lakeside deck", "Telescope", "Full kitchen"]),
         new("lofoten-dome", "The Quiet Fjord", SampleDestinations.Lofoten, StayType.Dome,
             "A small dome with a big view over a sheltered fjord. Come for the crisp air, stay for the long evenings beneath the northern sky.",
-            240m, 4.91, 38, 2, "images/stay-forest.svg", "A northern retreat surrounded by mountains and forest",
+            240m, 4.91, 38, 2, "images/stay-fjord.svg", "A glowing dome beside a northern fjord surrounded by mountains and forest",
             new(2, MoonPhase.LastQuarter, 51, 19, "8:00 PM – 11:00 PM"),
             ["Fjord view", "Heated dome", "Breakfast", "Local walking map"])
     ];

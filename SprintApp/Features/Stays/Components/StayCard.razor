@@ -1,0 +1,30 @@
+@inject SavedTripsService SavedTrips
+
+<article class="stay-card" data-stay-id="@Stay.Id">
+    <div class="stay-image">
+        <img src="@Stay.ImageUrl" alt="@Stay.ImageDescription" loading="lazy" />
+        <span class="darkness-badge"><Icon Name="sparkles" Size="12" /> BORTLE @Stay.Sky.BortleClass <span>· @Stay.Sky.DarknessLabel</span></span>
+        <button type="button" class="save-button @(IsSaved ? "is-saved" : "")" aria-label="@(IsSaved ? $"Unsave {Stay.Name}" : $"Save {Stay.Name}")" aria-pressed="@IsSaved.ToString().ToLowerInvariant()" title="@(IsSaved ? "Remove from saved stays" : "Save for this visit")" @onclick="ToggleSaved"><Icon Name="heart" Size="17" /></button>
+        <span class="stay-type">@Stay.Type</span>
+    </div>
+    <div class="stay-info">
+        <div class="stay-location"><span><Icon Name="pin" Size="13" /> @Stay.Destination.DisplayName</span><span class="rating"><Icon Name="star" Size="12" /> @Stay.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</span></div>
+        <h3><button type="button" class="stay-title-button" @onclick="() => OnDetails.InvokeAsync(Stay)">@Stay.Name</button></h3>
+        <p class="stay-sky"><Icon Name="moon" Size="14" /> @Stay.Sky.MoonPhaseLabel <span>·</span> @Stay.Sky.MoonIlluminationPercent% illuminated</p>
+        <div class="stay-bottom"><span><strong>$@Stay.PricePerNight.ToString("0")</strong> / night</span><button type="button" class="round-button" aria-label="View details for @Stay.Name" @onclick="() => OnDetails.InvokeAsync(Stay)"><Icon Name="arrow-up-right" Size="19" /></button></div>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Stay Stay { get; set; } = default!;
+    [Parameter] public EventCallback<Stay> OnDetails { get; set; }
+    [Parameter] public EventCallback<string> OnSaved { get; set; }
+
+    private bool IsSaved => SavedTrips.Contains(Stay.Id, SavedItemType.Stay);
+
+    private async Task ToggleSaved()
+    {
+        var added = SavedTrips.Toggle(Stay.Id, SavedItemType.Stay);
+        await OnSaved.InvokeAsync(added ? $"{Stay.Name} saved for this visit." : $"{Stay.Name} removed from saved stays.");
+    }
+}

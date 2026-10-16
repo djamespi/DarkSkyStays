@@ -1,0 +1,6 @@
+.save-button { position: absolute; top: 11px; right: 11px; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; background: #0a1725b8; color: #d4dfcf; border: 1px solid #b5c7bb4a; border-radius: 50%; backdrop-filter: blur(8px); transition: background .2s, color .2s; }
+.save-button:hover, .save-button.is-saved { background: #d5edab; color: #1a291d; border-color: #d5edab; }
+.save-button.is-saved ::deep svg { fill: currentColor; }
+.stay-title-button { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.stay-title-button:hover { color: #d5edab; }
+@media (max-width: 600px) { .save-button { width: 40px; height: 40px; } }

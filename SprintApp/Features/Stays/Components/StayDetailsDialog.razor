@@ -1,0 +1,77 @@
+@inject IJSRuntime JS
+@inject SavedTripsService SavedTrips
+@implements IAsyncDisposable
+
+<dialog @ref="dialog" class="stay-dialog" aria-labelledby="stay-detail-title" aria-describedby="stay-detail-description">
+    @if (Stay is not null)
+    {
+        <div class="detail-image">
+            <img src="@Stay.ImageUrl" alt="@Stay.ImageDescription" />
+            <span class="darkness-badge"><Icon Name="sparkles" Size="13" /> BORTLE @Stay.Sky.BortleClass · @Stay.Sky.DarknessLabel</span>
+            <button type="button" class="dialog-close" data-dialog-close aria-label="Close stay details" @onclick="Dismiss"><Icon Name="close" Size="21" /></button>
+        </div>
+        <div class="detail-content">
+            <span class="eyebrow"><Icon Name="pin" Size="13" /> @Stay.Destination.DisplayName</span>
+            <h2 id="stay-detail-title">@Stay.Name</h2>
+            <div class="detail-facts"><span>@Stay.Type</span><span>Up to @Stay.MaxGuests guests</span><span><Icon Name="star" Size="12" /> @Stay.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) · @Stay.ReviewCount sample reviews</span></div>
+            <p class="detail-description" id="stay-detail-description">@Stay.Description</p>
+            <div class="detail-columns">
+                <div class="detail-amenities"><h3>Little comforts. Big skies.</h3><ul>@foreach (var amenity in Stay.Amenities) { <li><Icon Name="check" Size="15" /> @amenity</li> }</ul></div>
+                <div class="detail-sky"><span class="eyebrow"><Icon Name="moon" Size="14" /> YOUR SAMPLE NIGHT</span><dl><div><dt>Light pollution</dt><dd>Bortle @Stay.Sky.BortleClass / 9</dd></div><div><dt>Moon phase</dt><dd>@Stay.Sky.MoonPhaseLabel</dd></div><div><dt>Moon illumination</dt><dd>@Stay.Sky.MoonIlluminationPercent%</dd></div><div><dt>Cloud cover</dt><dd>@Stay.Sky.CloudCoverPercent%</dd></div><div><dt>Viewing window</dt><dd>@Stay.Sky.ViewingWindow</dd></div></dl><p>Illustrative conditions, not a live forecast.</p></div>
+            </div>
+            <div class="detail-save-row"><div><strong>$@Stay.PricePerNight.ToString("0")</strong><span> USD / night</span><small>Sample rate · no payment required</small></div><button type="button" class="button @(IsSaved ? "button-outline" : "button-lime")" aria-pressed="@IsSaved.ToString().ToLowerInvariant()" @onclick="ToggleSaved"><Icon Name="heart" Size="17" /> @(IsSaved ? "Remove from saved" : "Save this stay")</button></div>
+            <p class="detail-session-note">Keep your favorites together while you explore. Saved stays reset when you refresh.</p>
+        </div>
+    }
+</dialog>
+
+@code {
+    [Parameter] public Stay? Stay { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<string> OnSaved { get; set; }
+
+    private ElementReference dialog;
+    private IJSObjectReference? module;
+    private DotNetObjectReference<StayDetailsDialog>? reference;
+    private bool isOpen;
+    private bool IsSaved => Stay is not null && SavedTrips.Contains(Stay.Id, SavedItemType.Stay);
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/dialog.js");
+            reference = DotNetObjectReference.Create(this);
+            await module.InvokeVoidAsync("attach", dialog, reference);
+        }
+
+        if (module is not null && isOpen != (Stay is not null))
+        {
+            isOpen = Stay is not null;
+            await module.InvokeVoidAsync(isOpen ? "open" : "close", dialog);
+        }
+    }
+
+    [JSInvokable] public Task Dismiss() => OnClose.InvokeAsync();
+
+    private async Task ToggleSaved()
+    {
+        if (Stay is null) return;
+        var added = SavedTrips.Toggle(Stay.Id, SavedItemType.Stay);
+        await OnSaved.InvokeAsync(added ? $"{Stay.Name} saved for this visit." : $"{Stay.Name} removed from saved stays.");
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (module is not null)
+        {
+            try
+            {
+                await module.InvokeVoidAsync("detach", dialog);
+                await module.DisposeAsync();
+            }
+            catch (JSDisconnectedException) { }
+        }
+        reference?.Dispose();
+    }
+}
